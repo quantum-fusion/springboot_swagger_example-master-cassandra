@@ -22,6 +22,7 @@ package guru.springframework.dao;
 
 import com.datastax.driver.core.*;
 import guru.springframework.util.CustomException;
+import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,8 +36,10 @@ import java.util.ArrayList;
 /**
  * Created by Henry Hottelet
  */
+@Component
 public interface TableDao {
 
+    public void createTable(String keySpace) throws SQLException, CustomException;
 
     public String setTables(String keySpace, String tableId, String restaurantId, String seatNumber) throws SQLException, Exception, CustomException;
 

@@ -184,5 +184,21 @@ public class SessionUtil {
         }
     }
 
+    public ResultSet querySchema(String keySpace, String cql) throws SQLException, CustomException {
+        ResultSet r = null;
+
+        try {
+            Session session = cluster.connect(keySpace);
+            r = session.execute(cql);
+        }
+        catch (Exception e)
+        {
+            logger.error("querySchema exception: ", e);
+        }
+
+        logger.debug("queryschema results:" + r);
+        return r;
+    }
+
 
 }

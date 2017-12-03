@@ -72,22 +72,6 @@ public class TableDaoImpl implements TableDao {
         }
     }
 
-    public ResultSet querySchema(String keySpace, String cql) throws SQLException, CustomException {
-        ResultSet r = null;
-
-        try {
-            Session session = cluster.connect(keySpace);
-            r = session.execute(cql);
-        }
-        catch (Exception e)
-        {
-            customException("querySchema exception: ", e);
-        }
-
-        logger.debug("queryschema results:" + r);
-        return r;
-    }
-
     @Override
        public String setTables(String keySpace, String tableId, String restaurantId, String seatNumber) throws SQLException, Exception, CustomException {
 

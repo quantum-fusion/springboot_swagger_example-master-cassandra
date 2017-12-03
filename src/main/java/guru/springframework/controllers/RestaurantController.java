@@ -25,6 +25,7 @@ import guru.springframework.dao.TableDao;
 import guru.springframework.domain.Product;
 import guru.springframework.domain.Restaurant;
 import guru.springframework.domain.Table;
+import guru.springframework.services.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -51,13 +52,27 @@ import java.util.ArrayList;
 public class RestaurantController {
     private static final Logger logger = LoggerFactory.getLogger(RestaurantController.class);
 
-    private RestaurantDao RestaurantService;
-    private TableDao TableService;
-
     @Autowired
     private guru.springframework.cassandra.SessionUtil p;
 
+//ToDo figure out this interface
+//ToDo determine how the integration test will work
+    private RestaurantDao restaurantDao;
+//
+//    @Autowired
+//    public void setRestaurantDao(RestaurantDao restaurantDao) {
+//        this.restaurantDao = restaurantDao;
+//    }
+//
+    private TableDao tableDao;
+//
+//    @Autowired
+//    public void setTableDao(TableDao tableDao) {
+//        this.tableDao = tableDao;
+//    }
+
     public RestaurantController() {
+
     }
 
     @Autowired
@@ -70,9 +85,10 @@ public class RestaurantController {
             s.connect("127.0.0.1");
           //  s.setupPooling("127.0.0.1");
 
-     //       s.createSchema("accounts");
-     //       s.createTable("accounts");
-     //       s.createIndex("accounts");
+            s.createSchema("accounts");
+            restaurantDao.createTable("accounts");
+            tableDao.createTable("accounts");
+            s.createIndex("accounts");
 
         } catch (Exception e) {
             logger.error("ServletController::ServletController(): Here is some ERROR: " + e);

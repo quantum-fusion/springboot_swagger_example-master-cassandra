@@ -36,6 +36,8 @@ import java.util.ArrayList;
 @Component
 public interface RestaurantDao {
 
+    public void createTable(String keySpace) throws SQLException, CustomException;
+
     public String setRestaurants(String keySpace, String restaurantId, String cuisine, String seating) throws SQLException, Exception, CustomException;
 
     public ArrayList<String> getRestaurants(ResultSet results) throws SQLException, Exception, CustomException;

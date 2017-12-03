@@ -46,12 +46,6 @@ public class RestaurantDaoImpl implements RestaurantDao {
     // private Metadata metadata;
     //   private ArrayList<String> queryResults = new ArrayList<String>();
 
-    public void customException(String text, Exception e) throws CustomException {
-
-        logger.error(text);
-        throw new CustomException(text, e);
-    }
-
     public void createTable(String keySpace) throws SQLException, CustomException {
 
         try {
@@ -67,25 +61,11 @@ public class RestaurantDaoImpl implements RestaurantDao {
             logger.info("Connected to cluster: %s\n" +
                     cluster.getClusterName());
         } catch (Exception e) {
-            customException("Orm::createTable exception: ", e);
+            logger.error("Orm::createTable exception: ", e);
         }
     }
 
-    public ResultSet querySchema(String keySpace, String cql) throws SQLException, CustomException {
-        ResultSet r = null;
 
-        try {
-            Session session = cluster.connect(keySpace);
-            r = session.execute(cql);
-        }
-        catch (Exception e)
-        {
-            customException("querySchema exception: ", e);
-        }
-
-        logger.debug("queryschema results:" + r);
-        return r;
-    }
 
     public String setRestaurants(String keySpace, String restaurantId, String cuisine, String seating) throws SQLException, Exception, CustomException {
 
@@ -112,7 +92,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
             return "200/Success";
 
         } catch (Exception e) {
-            customException("Orm::setRestaurants exception: ", e);
+            logger.error("Orm::setRestaurants exception: ", e);
         }
 
         return "500/Error: Orm::setRestaurants Exception";
