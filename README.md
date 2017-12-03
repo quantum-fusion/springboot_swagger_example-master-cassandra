@@ -12,9 +12,14 @@
 - Application.properties supports changing port numbers
 
 - Databases currently supported
-- Cassandra Datastax support
+- DAO Layer Design Pattern (CRUD operations to Cassandra)
+- JPA Layer Design Pattern (CRUD operations to H2)
+- Cassandra Datastax support (https://www.datastax.com/products/datastax-enterprise)
 - H2 in memory database
-- JPA layer support
+
+Tools:
+DataStax CQL IDE Editor for MACOS (http://docs.datastax.com/en/dse/5.1/dse-dev/datastax_enterprise/devcenter/dcToc.html )
+
 
  .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
