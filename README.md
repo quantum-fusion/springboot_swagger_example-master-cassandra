@@ -49,5 +49,6 @@ mvn clean install
 java -jar ./target/spring-boot-web-0.0.1-SNAPSHOT.jar
 
 #Step4: Run web browser to generate Swagger docs and tests
-localhost:8080/v2/api-docs
-localhost:8080/swagger-ui.html
+
+Execute localhost:8080/v2/api-docs in web browser.
+Execute localhost:8080/swagger-ui.html in web browser.
