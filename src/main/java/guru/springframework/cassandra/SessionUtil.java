@@ -135,6 +135,24 @@ public class SessionUtil {
         }
     }
 
+    public void createTable(String keySpace) throws SQLException, CustomException {
+
+        try {
+
+            Session session = cluster.connect(keySpace);
+
+            session.execute("CREATE TABLE test (" +
+                    "message text," +
+                    "testId text PRIMARY KEY," +
+                    ")WITH COMPACT STORAGE;");
+
+            logger.info("Connected to cluster: %s\n" +
+                    cluster.getClusterName());
+        } catch (Exception e) {
+            customException("Orm::createTable exception: ", e);
+        }
+    }
+
 
     public void createSchema(String keySpace) throws SQLException, CustomException {
 

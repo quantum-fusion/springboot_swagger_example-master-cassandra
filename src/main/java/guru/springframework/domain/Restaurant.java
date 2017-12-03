@@ -1,10 +1,12 @@
 package guru.springframework.domain;
 
+import javax.persistence.Entity;
 import java.io.Serializable;
 
 /**
  * Created by hottelet on 10/23/17.
  */
+
 
 public class Restaurant implements Serializable {
 

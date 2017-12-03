@@ -57,7 +57,7 @@ public class RestaurantController {
     @Autowired
     private guru.springframework.cassandra.SessionUtil p;
 
-    RestaurantController() {
+    public RestaurantController() {
     }
 
     @Autowired
@@ -84,12 +84,16 @@ public class RestaurantController {
     @RequestMapping(value = "/", method= RequestMethod.POST, produces = "text/plain")
     public String index() {
 
+        logger.info("Greetings from Rest Server!");
+
         return "Greetings from Rest Server!";
     }
 
     @ApiOperation(value = "Greetings from Rest Server")
     @RequestMapping(value = "/helloworld", method= RequestMethod.POST, produces = "text/plain")
     public String helloworld() {
+
+        logger.info("helloworld");
 
         return "helloworld!";
     }

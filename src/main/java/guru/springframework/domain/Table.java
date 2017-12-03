@@ -1,10 +1,12 @@
 package guru.springframework.domain;
 
+import javax.persistence.Entity;
 import java.io.Serializable;
 
 /**
  * Created by hottelet on 10/24/17.
  */
+
 public class Table implements Serializable {
 
     static final long serialVersionUID = 1L; //assign a long value
