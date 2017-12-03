@@ -4,7 +4,7 @@
 
 - REST API Controller interface supports multiple controllers
 
-- Self documenting Swagger API interface
+- Self documenting Swagger API interface (https://springframework.guru/spring-boot-restful-api-documentation-with-swagger-2/)
 - In line tests from web browser
 - Standard error handling interface for Log4j
 
