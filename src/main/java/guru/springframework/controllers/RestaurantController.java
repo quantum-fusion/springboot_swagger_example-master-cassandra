@@ -20,8 +20,8 @@
 
 package guru.springframework.controllers;
 
-import guru.springframework.dao.RestaurantDao;
-import guru.springframework.dao.TableDao;
+// import guru.springframework.cassandra.RestaurantDaoImpl;
+import guru.springframework.dao.*;
 import guru.springframework.domain.Product;
 import guru.springframework.domain.Restaurant;
 import guru.springframework.domain.Table;
@@ -48,28 +48,12 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/restaurant")
 @Api(value="onlinestore", description="Operations pertaining to Rest API Server")
-@ComponentScan("persistence")
+@ComponentScan("guru.springframework.cassandra,guru.springframework.dao")
 public class RestaurantController {
     private static final Logger logger = LoggerFactory.getLogger(RestaurantController.class);
 
     @Autowired
     private guru.springframework.cassandra.SessionUtil p;
-
-//ToDo figure out this interface
-//ToDo determine how the integration test will work
-    private RestaurantDao restaurantDao;
-//
-//    @Autowired
-//    public void setRestaurantDao(RestaurantDao restaurantDao) {
-//        this.restaurantDao = restaurantDao;
-//    }
-//
-    private TableDao tableDao;
-//
-//    @Autowired
-//    public void setTableDao(TableDao tableDao) {
-//        this.tableDao = tableDao;
-//    }
 
     public RestaurantController() {
 
@@ -83,13 +67,16 @@ public class RestaurantController {
         try {
 
             s.connect("127.0.0.1");
-          //  s.setupPooling("127.0.0.1");
+            //  s.setupPooling("127.0.0.1");
 
-            s.createSchema("accounts");
-            restaurantDao.createTable("accounts");
-            tableDao.createTable("accounts");
+         //   s.createSchema("accounts");
+
+            logger.error("before createRestaurantTable");
+            s.createRestaurantTable("accounts");
+            logger.error("after createRestaurantTable");
+
+            s.createTablesTable("accounts");
             s.createIndex("accounts");
-
         } catch (Exception e) {
             logger.error("ServletController::ServletController(): Here is some ERROR: " + e);
         }
@@ -134,21 +121,24 @@ public class RestaurantController {
     }
 
     @ApiOperation(value = "Add a new restaurant to inventory list")
-    @RequestMapping(value = "/addRestaurant", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity addRestaurant(@RequestBody Restaurant restaurant) {
+    @RequestMapping(value = "/addRestaurant", method = RequestMethod.POST, produces = "text/plain")
+    public String addRestaurant(@RequestBody Restaurant restaurant) {
 
-        // logger.info("json:" + restaurant);
 
-        // RestaurantService.addRestaurant(restaurant);
 
         try {
 
-            //   ObjectMapper mapper = new ObjectMapper();
-            //  Restaurant value = mapper.readValue(restaurant.toString(), Restaurant.class);
+//            ObjectMapper mapper = new ObjectMapper();
+//            Restaurant value = mapper.readValue(restaurant.toString(), Restaurant.class);
+//
+//            logger.info("json:" + value);
 
-            //ToDo         p.setRestaurants("accounts",value.getRestaurantId(), value.getCuisine(), value.getSeating());
 
-            return new ResponseEntity("restaurant saved successfully", HttpStatus.OK);
+            p.setRestaurants("accounts",restaurant.getRestaurantId(), restaurant.getCuisine(), restaurant.getSeating());
+
+            logger.error("addRestaurant 200/OK");
+
+            return "200/OK";
 
         }
         catch (Exception e)
@@ -157,7 +147,7 @@ public class RestaurantController {
             logger.error("ServletController::addRestaurant" + e);
         }
 
-        return new ResponseEntity("restaurant saved successfully", HttpStatus.EXPECTATION_FAILED);
+        return "500/error";
 
     }
 
@@ -192,15 +182,15 @@ public class RestaurantController {
     }
 
     @ApiOperation(value = "Get a restaurant from list")
-    @RequestMapping(value = "/getRestaurants", method = RequestMethod.POST, produces = "application/json")
-    public ArrayList<String> getRestaurants() {
+    @RequestMapping(value = "/getRestaurants", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<String> getRestaurants(Restaurant restaurant, Model model) {
 
         ArrayList<String> restaurantList = new ArrayList<String>();
 
         String cql = "SELECT * FROM accounts.restaurants allow filtering;";
         logger.debug("cql: " + cql);
         try {
-//ToDo            restaurantList = p.getRestaurants(p.querySchema("accounts", cql));
+            restaurantList = p.getRestaurants(p.querySchema("accounts", cql));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -21,12 +21,16 @@
 package guru.springframework.cassandra;
 
 import com.datastax.driver.core.*;
+import com.datastax.driver.core.querybuilder.Delete;
+import com.datastax.driver.core.querybuilder.Insert;
+import com.datastax.driver.core.querybuilder.QueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import guru.springframework.util.CustomException;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 // import com.codahale.metrics.*;
 
@@ -198,6 +202,158 @@ public class SessionUtil {
 
         logger.debug("queryschema results:" + r);
         return r;
+    }
+
+    public void createRestaurantTable(String keySpace) throws SQLException, CustomException {
+
+        try {
+
+            Session session = cluster.connect(keySpace);
+
+            session.execute("CREATE TABLE restaurants (" +
+                    "cuisine text," +
+                    "seating text," +
+                    "restaurantId text PRIMARY KEY," +
+                    ")WITH COMPACT STORAGE;");
+
+            logger.info("Connected to cluster: %s\n" +
+                    cluster.getClusterName());
+        } catch (Exception e) {
+            logger.error("Orm::createTable exception: ", e);
+        }
+    }
+
+
+
+    public String setRestaurants(String keySpace, String restaurantId, String cuisine, String seating) throws SQLException, Exception, CustomException {
+
+        try {
+            Session session = cluster.connect(keySpace);
+
+            //String cql = "SELECT * FROM restaurants.restaurantId WHERE restaurantId =\" + \"'\" + restaurantId + \"'\" +  \"allow filtering;";
+            //ArrayList<String> queryList = new ArrayList<String>();
+            //queryList = getRestaurants(querySchema(keySpace,cql));
+
+            //   logger.debug("" + queryList);
+            //  logger.debug("" + queryList.size());
+
+            Insert insert = QueryBuilder
+                    .insertInto("restaurants")
+                    .value("cuisine", cuisine)
+                    .value("seating", seating)
+                    .value("restaurantId", restaurantId);
+
+            logger.debug(insert.getQueryString());
+
+            ResultSet results = session.execute(insert);
+
+            return "200/Success";
+
+        } catch (Exception e) {
+            logger.error("Orm::setRestaurants exception: ", e);
+        }
+
+        return "500/Error: Orm::setRestaurants Exception";
+    }
+
+    public ArrayList<String> getRestaurants(ResultSet results) throws SQLException, Exception, CustomException {
+        ArrayList<String> queryResults = new ArrayList<String>();
+
+        for (Row row : results) {
+
+            queryResults.add(String.format("%-20s\t%-20s\t%-20s\n",
+                    row.getString("cuisine"),
+                    row.getString("seating"),
+                    row.getString("restaurantId")));
+        }
+
+        return queryResults;
+    }
+
+    public void createTablesTable(String keySpace) throws SQLException, CustomException {
+
+        try {
+
+            Session session = cluster.connect(keySpace);
+
+            session.execute("CREATE TABLE tables (" +
+                    "restaurantId text," +
+                    "seatNumber text," +
+                    "tableId text PRIMARY KEY," +
+                    ")WITH COMPACT STORAGE;");
+
+            logger.info("Connected to cluster: %s\n" +
+                    cluster.getClusterName());
+        } catch (Exception e) {
+            customException("Orm::createTable exception: ", e);
+        }
+    }
+
+    public String setTables(String keySpace, String tableId, String restaurantId, String seatNumber) throws SQLException, Exception, CustomException {
+
+        try {
+            Session session = cluster.connect(keySpace);
+
+            Insert insert = QueryBuilder
+                    .insertInto("tables")
+                    .value("restaurantId", restaurantId)
+                    .value("seatNumber", seatNumber)
+                    .value("tableId", tableId);
+
+            logger.debug(insert.getQueryString());
+
+            ResultSet results = session.execute(insert);
+
+            return "200/Success";
+
+        } catch (Exception e) {
+            customException("Orm::setTables exception: ", e);
+        }
+
+        return "500/Error: Orm::setTables Exception";
+    }
+
+
+    public ArrayList<String> getTables(ResultSet results) {
+
+
+
+        ArrayList<String> queryResults = new ArrayList<String>();
+
+        for (Row row : results) {
+
+            queryResults.add(String.format("%-20s\t%-20s\t%-20s\n",
+                    row.getString("restaurantId"),
+                    row.getString("seatNumber"),
+                    row.getString("tableId")));
+        }
+
+        return queryResults;
+
+    }
+
+
+    public String getTables(String keySpace, String tableId) throws SQLException, Exception, CustomException {
+
+        try {
+            Session session = cluster.connect(keySpace);
+
+            Delete delete = QueryBuilder
+                    .delete()
+                    .from("tables", "tableId");
+            // .where(eq("tableId", tableId));
+
+            logger.debug(delete.getQueryString());
+
+            ResultSet results = session.execute(delete);
+
+            return "200/Success";
+
+        } catch (Exception e) {
+            customException("Orm::getTables exception: ", e);
+        }
+
+        return "500/Error: Orm::getTables Exception";
     }
 
 

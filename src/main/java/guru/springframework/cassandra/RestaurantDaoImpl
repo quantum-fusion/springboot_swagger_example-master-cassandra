@@ -18,35 +18,28 @@
  * @author Henry Hottelet
  */
 
-package guru.springframework.dao;
+package guru.springframework.cassandra;
 
 import com.datastax.driver.core.*;
-import guru.springframework.domain.Product;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import com.datastax.driver.core.querybuilder.Insert;
+import com.datastax.driver.core.querybuilder.QueryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import guru.springframework.util.CustomException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-// import com.codahale.metrics.*;
 
-import guru.springframework.domain.Restaurant;
-import org.springframework.stereotype.Repository;
+
 
 /**
  * Created by Henry Hottelet
  */
+@Component
+public abstract class RestaurantDaoImpl {
 
-@RepositoryRestResource
-public interface RestaurantDao {
-
-//    public Restaurant saveRestaurant(Restaurant restaurant);
-
-    public void createTable(String keySpace) throws SQLException, CustomException;
-
-    public String setRestaurants(String keySpace, String restaurantId, String cuisine, String seating) throws SQLException, Exception, CustomException;
-
-    public ArrayList<String> getRestaurants(ResultSet results) throws SQLException, Exception, CustomException;
+    private static final Logger logger = LoggerFactory.getLogger(RestaurantDaoImpl.class);
 
 }
