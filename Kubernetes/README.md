@@ -1,13 +1,18 @@
 #Step1(Optional): Install KubeCtl Kubernetes on MAC/OS
 #
 # https://kubernetes.io/docs/tasks/tools/install-kubectl/
+#
+# KubeCtl Overview
+# https://kubernetes.io/docs/reference/kubectl/overview/
+#
 
 
 #Step2: Install Kubernetes Minikube instead of Kube-Solo to Start Kubernetes Cluster on MAC/OS
 #
 # https://deis.com/docs/workflow/quickstart/provider/minikube/boot/
+# https://kubernetes.io/docs/getting-started-guides/minikube/
 #
-# Hello MiniKube
+# Hello MiniKube Example
 #
 # https://kubernetes.io/docs/tutorials/stateless-application/hello-minikube/
 
@@ -33,8 +38,7 @@
 %./minikube.setup
 
 #StepAppendix(Deprecated from 2016 Do Not Use): Install Microsoft's Deis Kube-Solo for MACOS
-
-   https://deis.com/blog/2016/run-kubernetes-on-a-mac-with-kube-solo/
+#   https://deis.com/blog/2016/run-kubernetes-on-a-mac-with-kube-solo/
 
 
 #Step5: Execute Kubernetes curl tests for example-service

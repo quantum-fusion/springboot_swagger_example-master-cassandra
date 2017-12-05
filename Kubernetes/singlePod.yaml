@@ -1,5 +1,7 @@
 # https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/
 
+# https://stackoverflow.com/questions/46425997/kubernetes-create-multiple-pods-deployments-of-the-same-image-with-different-com
+
 apiVersion: v1
 kind: Pod
 metadata:
