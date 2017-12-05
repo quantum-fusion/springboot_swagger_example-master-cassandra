@@ -52,3 +52,51 @@ java -jar ./target/spring-boot-web-0.0.1-SNAPSHOT.jar
 
 Execute localhost:8080/v2/api-docs in web browser.
 Execute localhost:8080/swagger-ui.html in web browser.
+
+#Step5(Optional): Install Docker for MACOS
+
+https://docs.docker.com/docker-for-mac/install/
+
+#Step5(Optional): Build Docker image
+
+Start Docker on MACOS
+
+cd dockerbuild
+
+./build.script
+
+#Step6(Optional): Setup DockerHub account, and then Authenticate with DockerHub
+
+cd dockerbuild
+
+./upload.script
+
+ #Step7(Optional): Install KubeCtl Kubernetes on MAC/OS
+
+ https://kubernetes.io/docs/tasks/tools/install-kubectl/
+
+
+#Step8: Install Kubernetes Minikube instead of Kube-Solo to Start Kubernetes Cluster on MAC/OS
+
+ https://deis.com/docs/workflow/quickstart/provider/minikube/boot/
+
+#Step9: Run a Hello World Application using the running Kubernetes cluster
+
+ https://kubernetes.io/docs/tasks/access-application-cluster/service-access-application-cluster/
+
+ Execute Steps 1-9
+
+  kubectl run hello-world --replicas=2 --labels="run=load-balancer-example" --image=gcr.io/google-samples/node-hello:1.0  --port=8080
+
+#Step10(Optional): Run the Docker Image for the REST Service
+
+ https://kubernetes.io/docs/tasks/access-application-cluster/service-access-application-cluster/
+
+ Execute Steps 1-9
+
+kubectl run spring-boot-web --replicas=2 --labels="run=load-balancer-example" --image=joethecoder2/spring-boot-web  --port=8080
+
+
+#StepAppendix(Deprecated from 2016 Do Not Use): Install Microsoft's Deis Kube-Solo for MACOS
+
+   https://deis.com/blog/2016/run-kubernetes-on-a-mac-with-kube-solo/

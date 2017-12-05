@@ -55,6 +55,8 @@ public class RestaurantController {
     @Autowired
     private guru.springframework.cassandra.SessionUtil p;
 
+    String propertiesIpaddress = "127.0.0.1";
+
     public RestaurantController() {
 
     }
@@ -64,12 +66,22 @@ public class RestaurantController {
 
         this.p = s;
 
+        Singleton cassandraProperties = Singleton.getInstance( );
+
         try {
 
-            s.connect("127.0.0.1");
-            //  s.setupPooling("127.0.0.1");
+            if(cassandraProperties.getCassandraIpAddress().equals("")) {
+                p.setupPooling(propertiesIpaddress);
+            }
+            else
+            {
+                p.setupPooling(cassandraProperties.getCassandraIpAddress());
 
-         //   s.createSchema("accounts");
+            }
+
+           // s.connect("127.0.0.1");
+           //  s.setupPooling("127.0.0.1");
+           //   s.createSchema("accounts");
 
             logger.error("before createRestaurantTable");
             s.createRestaurantTable("accounts");

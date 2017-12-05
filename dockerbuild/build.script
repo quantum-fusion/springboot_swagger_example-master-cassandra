@@ -1,3 +1,6 @@
-# cp /Users/hottelet/Desktop/rest-server-demo/rest-server/server/out/artifacts/gs_rest_service_jar/gs-rest-service.jar .
 
-docker build -t joethecoder2/rest-server .
+cp ../target/spring-boot-web-0.0.1-SNAPSHOT.jar spring-boot-web-0.0.1-SNAPSHOT.jar
+
+docker build -t joethecoder2/spring-boot-web .
+
+rm spring-boot-web-0.0.1-SNAPSHOT.jar
