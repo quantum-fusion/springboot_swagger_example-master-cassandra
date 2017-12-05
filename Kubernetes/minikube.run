@@ -1,0 +1,9 @@
+
+# https://deis.com/docs/workflow/quickstart/provider/minikube/boot/
+
+minikube config set vm-driver virtualbox
+
+minikube start --disk-size=60g --memory=4096
+
+kubectl cluster-info
+

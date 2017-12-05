@@ -1,0 +1,14 @@
+
+# Change IP address based on "Kubernetes master is running at https://<IPaddress>:8443"
+kubectl cluster-info
+
+
+curl http://192.168.64.3:32308
+
+curl http://192.168.64.3:32308/v2/api-docs
+
+curl http://192.168.64.3:32308/swagger-ui.html
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: text/plain' 'http://192.168.64.3:32308/restaurant/'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: text/plain' 'http://192.168.64.3:32308/restaurant/helloworld'
