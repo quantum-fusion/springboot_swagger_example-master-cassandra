@@ -3,7 +3,8 @@
 #Key Benefits of Spring Boot REST Server with Swagger
 
 - REST API Controller interface supports multiple controllers
-
+- Docker support with Kubernetes supports scaling on AWS, Azure, IBM.
+- Spring Boot supports Cloud Foundry CLI for scaling on AWS, Azure, IBM.
 - Self documenting Swagger API interface (https://springframework.guru/spring-boot-restful-api-documentation-with-swagger-2/)
 - In line tests from web browser
 - Standard error handling interface for Log4j
