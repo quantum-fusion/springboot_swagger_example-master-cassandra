@@ -39,3 +39,12 @@
 
 #Step5: Execute Kubernetes curl tests for example-service
 %./kubectl.test
+
+
+# Current Limitations
+#
+# Kubernetes single POD can not yet read arguments to pass IPAddress and Port to REST Controller for a remote Cassandra node.
+# - need to add commands to singlePod.yaml
+#
+# - consider launching two docker images within one POD to doublePod.yaml
+
