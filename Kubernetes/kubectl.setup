@@ -37,6 +37,8 @@ docker images
 
 kubectl cluster-info
 
+kubectl get pods --show-all
+
 kubectl describe nodes
 
 minikube service example-service
