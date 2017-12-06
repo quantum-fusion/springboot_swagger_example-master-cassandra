@@ -10,7 +10,7 @@ cd dockerbuild
 
 ./build.script
 
-#Step3: Setup DockerHub account, and then Authenticate with DockerHub
+#Step3(Optional): Setup DockerHub account, and then Authenticate with DockerHub to upload to the public registry (needed for Docker pulls from registry for images)
 
 cd dockerbuild
 

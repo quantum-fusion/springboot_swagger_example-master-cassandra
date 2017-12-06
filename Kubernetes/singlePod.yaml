@@ -5,13 +5,13 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: command-demo
+  name: spring-boot-web-demo
   labels:
-    purpose: demonstrate-command
+    purpose: demonstrate-spring-boot-web
 spec:
   containers:
-  - name: command-demo-container
-    image: debian
-    command: ["printenv"]
-    args: ["HOSTNAME", "KUBERNETES_PORT"]
+  - name: spring-boot-web
+    image: docker.io/joethecoder2/spring-boot-web
+    command: ["java","-jar", "spring-boot-web-0.0.1-SNAPSHOT.jar"]
+    args: ["-Dcassandra_ip=127.0.0.1", "-Dcassandra_port=9042"]
   restartPolicy: OnFailure

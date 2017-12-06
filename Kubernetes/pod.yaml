@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: microservices
+  labels:
+    app: apps
+spec:
+  containers:
+    - name: appContainer1 
+      image: gcr.io/mybucket/appContainerImage1 
+      ports:
+        - containerPort: 8080
+    - name: appContainer2
+      image: b.gcr.io/mybucket/appContainerImage2
+      ports:
+        - containerPort: 9090

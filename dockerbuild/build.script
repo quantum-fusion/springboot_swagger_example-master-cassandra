@@ -1,4 +1,12 @@
 
+cd ..
+
+mvn clean
+
+mvn clean install
+
+cd dockerbuild
+
 cp ../target/spring-boot-web-0.0.1-SNAPSHOT.jar spring-boot-web-0.0.1-SNAPSHOT.jar
 
 docker build -t joethecoder2/spring-boot-web .

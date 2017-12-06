@@ -1,7 +1,23 @@
 
 # https://kubernetes.io/docs/tasks/access-application-cluster/service-access-application-cluster/
 
-kubectl run spring-boot-web --replicas=2 --labels="run=load-balancer-example" --image=joethecoder2/spring-boot-web  --port=8080
+# kubectl delete pods --all
+
+kubectl delete pods spring-boot-web-demo
+
+kubectl create -f ./singlePod.yaml
+
+kubectl get pods --show-all
+
+kubectl describe pod spring-boot
+
+kubectl describe pod spring-boot-web
+
+kubectl logs spring-boot-web-demo --previous
+
+kubectl logs spring-boot-web-demo
+
+# kubectl run spring-boot-web-replica --replicas=2 --labels="run=load-balancer-example" --image=joethecoder2/spring-boot-web --port=8080
 
 kubectl get deployments spring-boot-web
 
@@ -21,15 +37,7 @@ docker images
 
 kubectl cluster-info
 
+kubectl describe nodes
+
 minikube service example-service
-
-curl http://192.168.64.3:32308
-
-curl http://192.168.64.3:32308/v2/api-docs
-
-curl http://192.168.64.3:32308/swagger-ui.html
-
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: text/plain' 'http://192.168.64.3:32308/restaurant/'
-
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: text/plain' 'http://192.168.64.3:32308/restaurant/helloworld'
 

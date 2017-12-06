@@ -57,6 +57,8 @@ public class RestaurantController {
 
     String propertiesIpaddress = "127.0.0.1";
 
+    Singleton controllerProperties;
+
     public RestaurantController() {
 
     }
@@ -66,16 +68,16 @@ public class RestaurantController {
 
         this.p = s;
 
-        Singleton cassandraProperties = Singleton.getInstance( );
+        this.controllerProperties = Singleton.getInstance( );
 
         try {
 
-            if(cassandraProperties.getCassandraIpAddress().equals("")) {
+            if(controllerProperties.getCassandraIpAddress().equals("")) {
                 p.setupPooling(propertiesIpaddress);
             }
             else
             {
-                p.setupPooling(cassandraProperties.getCassandraIpAddress());
+                p.setupPooling(controllerProperties.getCassandraIpAddress());
 
             }
 
@@ -94,6 +96,17 @@ public class RestaurantController {
         }
 
     }
+
+    @ApiOperation(value = "Rest Server command arguments")
+    @RequestMapping(value = "/arguments", method= RequestMethod.POST, produces = "text/plain")
+    public String testarguments() {
+
+        logger.info("Rest Server arguments!");
+
+        return this.controllerProperties.getCassandraIpAddress() + ":" + this.controllerProperties.getCassandraPort() + "\n";
+    }
+
+
 
     @ApiOperation(value = "Greetings from Rest Server")
     @RequestMapping(value = "/", method= RequestMethod.POST, produces = "text/plain")

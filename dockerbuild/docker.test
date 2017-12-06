@@ -1,0 +1,1 @@
+docker run -it -p 8080:8080 joethecoder2/spring-boot-web -Dcassandra_ip=127.0.0.1 -Dcassandra_port=9042
