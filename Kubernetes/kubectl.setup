@@ -23,11 +23,11 @@ kubectl get rs
 #
 
 
-kubectl describe pod spring-boot
+# kubectl describe pod spring-boot
 
 kubectl describe pod spring-boot-web
 
-kubectl logs spring-boot-web-demo --previous
+# kubectl logs spring-boot-web-demo --previous
 
 kubectl logs spring-boot-web-demo
 
@@ -58,7 +58,7 @@ kubectl expose deployment spring-boot-web --type=NodePort
 
 kubectl describe services example-service
 
-kubectl get pods --selector="run=load-balancer-example" --output=wide
+# kubectl get pods --selector="run=load-balancer-example" --output=wide
 
 docker images
 
@@ -68,5 +68,5 @@ kubectl get pods --show-all
 
 kubectl describe nodes
 
-minikube service example-service
+minikube service spring-boot-web
 

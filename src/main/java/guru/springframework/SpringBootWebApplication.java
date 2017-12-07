@@ -25,7 +25,7 @@ public class SpringBootWebApplication {
 
             for (String s: args) {
 
-                if (s.contains("-Dcassandra_ip")) {
+                if (s.contains("cassandra_ip")) {
                     System.out.println("found cassandra ip");
 
                     cassandraIpaddress = s.substring(s.indexOf("=") + 1, s.length());
@@ -35,7 +35,7 @@ public class SpringBootWebApplication {
                     logger.info(cassandraIpaddress);
                 }
 
-                if (s.contains("-Dcassandra_port")) {
+                if (s.contains("cassandra_port")) {
                     System.out.println("found cassandra port");
 
                     cassandraPort = s.substring(s.indexOf("=") + 1, s.length());
