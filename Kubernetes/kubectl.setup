@@ -1,13 +1,23 @@
 
 # https://kubernetes.io/docs/tasks/access-application-cluster/service-access-application-cluster/
 
-# kubectl delete pods --all
+# kubectl delete pods --all --force
 
 kubectl delete pods spring-boot-web-demo
 
-kubectl create -f ./singlePod.yaml
+# kubectl create -f ./singlePod.yaml
+
+# Why will these arguments not load?
+kubectl create -f ./deployment.yaml
 
 kubectl get pods --show-all
+
+kubectl get rs
+
+# Iteratively
+#kubectl delete deployment myService
+#
+
 
 kubectl describe pod spring-boot
 
@@ -16,6 +26,16 @@ kubectl describe pod spring-boot-web
 kubectl logs spring-boot-web-demo --previous
 
 kubectl logs spring-boot-web-demo
+
+
+
+# https://stackoverflow.com/questions/46228628/exposing-the-hello-minikube-service-fails-to-find-a-port
+
+kubectl delete deployment spring-boot-web
+
+kubectl run spring-boot-web --replicas=2 --image=joethecoder2/spring-boot-web --port=8080
+
+kubectl get rs
 
 # kubectl run spring-boot-web-replica --replicas=2 --labels="run=load-balancer-example" --image=joethecoder2/spring-boot-web --port=8080
 
@@ -27,7 +47,9 @@ kubectl get replicasets
 
 kubectl describe replicasets
 
-kubectl expose deployment spring-boot-web --type=NodePort --name=example-service
+kubectl expose deployment spring-boot-web --type=NodePort
+
+# kubectl expose deployment spring-boot-web --type=NodePort --name=example-service
 
 kubectl describe services example-service
 

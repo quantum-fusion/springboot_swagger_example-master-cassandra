@@ -1,0 +1,28 @@
+# https://stackoverflow.com/questions/44098164/how-to-pass-docker-run-flags-via-kubernetes-pod/47685083#47685083
+
+ apiVersion: extensions/v1beta1
+ kind: Deployment
+ metadata:
+   name: spring-boot-web
+ spec:
+   replicas: 1
+   revisionHistoryLimit: 1
+   strategy:
+       type: RollingUpdate
+   template:
+     metadata:
+       labels:
+         app: spring-boot-web
+     spec:
+       containers:
+       - name: spring-boot-web
+         image: docker.io/joethecoder2/spring-boot-web
+         resources:
+           limits:
+             cpu: 70m
+             memory: 30Mi
+           requests:
+             cpu: 50m
+             memory: 20Mi
+         args:
+           - "-Dcassandra_ip=127.0.0.1 -Dcassandra_port=9042"
