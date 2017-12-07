@@ -18,5 +18,5 @@ spec:
     - name: cassandra_port
       value: "9042"
     command: ["java","-jar", "spring-boot-web-0.0.1-SNAPSHOT.jar", "cassandra_ip=127.0.0.1", "cassandra_port=9042"]
-    args: ["$(cassandra_ip)", "$(cassandra_port)"]
+    args: ["cassandra_ip=127.0.0.1", "cassandra_port=9042"]
   restartPolicy: OnFailure
