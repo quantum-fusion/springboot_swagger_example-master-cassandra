@@ -12,6 +12,7 @@ spec:
   containers:
   - name: spring-boot-web
     image: docker.io/joethecoder2/spring-boot-web
+    env: ["name": "-Dcassandra_ip", "value": "127.0.0.1"]
     command: ["java","-jar", "spring-boot-web-0.0.1-SNAPSHOT.jar", "-D","cassandra_ip=127.0.0.1", "-D","cassandra_port=9042"]
     args: ["-Dcassandra_ip=127.0.0.1", "-Dcassandra_port=9042"]
   restartPolicy: OnFailure

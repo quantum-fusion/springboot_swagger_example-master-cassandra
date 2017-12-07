@@ -10,12 +10,16 @@ kubectl delete pods spring-boot-web-demo
 # Why will these arguments not load?
 kubectl create -f ./deployment.yaml
 
+kubectl get service
+
+# kubectl delete svc <service>
+
 kubectl get pods --show-all
 
 kubectl get rs
 
 # Iteratively
-#kubectl delete deployment myService
+#kubectl delete deployment <service>
 #
 
 
@@ -41,6 +45,7 @@ kubectl get rs
 
 kubectl get deployments spring-boot-web
 
+# displays Image, Args, and Limits on memory, and cpu
 kubectl describe deployments spring-boot-web
 
 kubectl get replicasets
