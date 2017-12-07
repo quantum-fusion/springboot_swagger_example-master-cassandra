@@ -21,6 +21,7 @@
 package guru.springframework.controllers;
 
 // import guru.springframework.cassandra.RestaurantDaoImpl;
+import guru.springframework.SpringBootWebApplication;
 import guru.springframework.dao.*;
 import guru.springframework.domain.Product;
 import guru.springframework.domain.Restaurant;
@@ -57,7 +58,7 @@ public class RestaurantController {
 
     String propertiesIpaddress = "127.0.0.1";
 
-    Singleton controllerProperties;
+
 
     public RestaurantController() {
 
@@ -68,17 +69,22 @@ public class RestaurantController {
 
         this.p = s;
 
-        this.controllerProperties = Singleton.getInstance( );
+        this.p.controllerProperties = Singleton.getInstance( );
 
         try {
 
-            if(controllerProperties.getCassandraIpAddress().equals("")) {
+            if(this.p.controllerProperties.getCassandraIpAddress().equals("")) {
                 p.setupPooling(propertiesIpaddress);
             }
             else
             {
-                p.setupPooling(controllerProperties.getCassandraIpAddress());
+                p.setupPooling(this.p.controllerProperties.getCassandraIpAddress());
 
+                logger.info("RestaurantController::RestaurantController: cassandraIPaddress" + this.p.controllerProperties.getCassandraIpAddress());
+            }
+
+            if(this.p.controllerProperties.getCassandraPort().equals("")) {
+                logger.info("RestaurantController::RestaurantController: cassandraPort" + this.p.controllerProperties.getCassandraPort());
             }
 
            // s.connect("127.0.0.1");
@@ -103,7 +109,7 @@ public class RestaurantController {
 
         logger.info("Rest Server arguments!");
 
-        return this.controllerProperties.getCassandraIpAddress() + ":" + this.controllerProperties.getCassandraPort() + "\n";
+        return this.p.controllerProperties.getCassandraIpAddress() + ":" + this.p.controllerProperties.getCassandraPort() + "\n";
     }
 
 

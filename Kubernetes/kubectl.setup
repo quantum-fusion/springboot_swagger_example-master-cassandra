@@ -5,10 +5,7 @@
 
 kubectl delete pods spring-boot-web-demo
 
-# kubectl create -f ./singlePod.yaml
-
-# Why will these arguments not load?
-kubectl create -f ./deployment.yaml
+kubectl create -f ./setupPod.yaml
 
 kubectl get service
 

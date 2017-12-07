@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spring-boot-web-demo
+  labels:
+    purpose: demonstrate-spring-boot-web
+spec:
+    containers:
+    - name: spring-boot-web
+      image: docker.io/joethecoder2/spring-boot-web
+      env:
+      - name: cassandra_ip
+        value: "127.0.0.1"
+      - name: cassandra_port
+        value: "9042"
+      command: ["/bin/sh","-c", "java -jar spring-boot-web-0.0.1-SNAPSHOT.jar cassandra_ip=$cassandra_ip cassandra_port=$cassandra_port"]
+    restartPolicy: OnFailure

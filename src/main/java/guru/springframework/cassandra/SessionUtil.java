@@ -24,6 +24,7 @@ import com.datastax.driver.core.*;
 import com.datastax.driver.core.querybuilder.Delete;
 import com.datastax.driver.core.querybuilder.Insert;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
+import guru.springframework.controllers.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -48,7 +49,7 @@ public class SessionUtil {
     // private Metadata metadata;
     //   private ArrayList<String> queryResults = new ArrayList<String>();
 
-
+    public Singleton controllerProperties;
 
 
     public void customException(String text, Exception e) throws CustomException {
