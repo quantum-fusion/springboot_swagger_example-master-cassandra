@@ -56,7 +56,7 @@ kubectl expose deployment spring-boot-web --type=NodePort
 
 # kubectl expose deployment spring-boot-web --type=NodePort --name=example-service
 
-kubectl describe services example-service
+kubectl describe services spring-boot-web
 
 # kubectl get pods --selector="run=load-balancer-example" --output=wide
 
