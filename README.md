@@ -67,6 +67,10 @@ cd ./dockerbuild
 
 ./upload.script
 
+# current limitation on running REST service in Docker, and pointing to local 127.0.0.1 for cassandra node, and exposing Cassandra node to Docker.
+
+docker run -d -p 8080:8080 -p 9042:9042 joethecoder2/spring-boot-web cassandra_ip=127.0.0.1 cassandra_port=9042
+
 #Step6(Not currently supported due to limitation in Docker with datastax driver v3): Install Kubernetes, and Launch REST service (see ./Kubernetes/README.md)
 
 cd ./Kubernetes
