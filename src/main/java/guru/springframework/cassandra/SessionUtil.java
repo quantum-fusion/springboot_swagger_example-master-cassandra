@@ -58,11 +58,42 @@ public class SessionUtil {
         throw new CustomException(text, e);
     }
 
-    public void connect(String node) throws CustomException {
+    public void setuplocalDatabase(String keyspace) {
+        this.controllerProperties.setCassandraIpAddress("127.0.0.1");
+        this.controllerProperties.setCassandraPort("9042");
+    }
+
+    public void setupRestaurantDatabaseTables(String keySpace) throws CustomException {
 
         try {
+
+            this.setupPooling(this.controllerProperties.getCassandraIpAddress());
+            Session session = cluster.connect(keySpace);
+
+            this.createRestaurantTable(keySpace);
+            this.createTablesTable(keySpace);
+            this.createIndex(keySpace);
+
+    } catch (Exception e) {
+        logger.error("SessionUtil::setupDatabaseTables(): Here is some ERROR: " + e);
+    }
+
+    }
+
+    public void setupDatabase(String ipaddress, String port) {
+
+        this.controllerProperties.setCassandraIpAddress(ipaddress);
+        this.controllerProperties.setCassandraPort(port);
+    }
+
+    public void connect(String ipAddress) throws CustomException {
+
+        // https://stackoverflow.com/questions/16783725/error-while-connecting-to-cassandra-using-java-driver-for-apache-cassandra-1-0-f
+        // http://docs.datastax.com/en/developer/java-driver/3.1/manual/native_protocol/
+        try {
             cluster = Cluster.builder()
-                    .addContactPoint(node)
+                    .addContactPoint(ipAddress)
+                    .withProtocolVersion(ProtocolVersion.V2)
                     .build();
 
             // metadata = cluster.getMetadata();
@@ -125,7 +156,9 @@ public class SessionUtil {
                     ipAddress
             };
 
-            final Cluster.Builder builder = new Cluster.Builder().addContactPoints(cassandraNodes).withPoolingOptions(pools);
+            // https://stackoverflow.com/questions/16783725/error-while-connecting-to-cassandra-using-java-driver-for-apache-cassandra-1-0-f
+            // http://docs.datastax.com/en/developer/java-driver/3.1/manual/native_protocol/
+            final Cluster.Builder builder = new Cluster.Builder().addContactPoints(cassandraNodes).withProtocolVersion(ProtocolVersion.V2).withPoolingOptions(pools);
 
             cluster = builder.build();
             // metadata = cluster.getMetadata();
@@ -140,13 +173,13 @@ public class SessionUtil {
         }
     }
 
-    public void createTable(String keySpace) throws SQLException, CustomException {
+    public void createTable(String keySpace, String tableName) throws SQLException, CustomException {
 
         try {
 
             Session session = cluster.connect(keySpace);
 
-            session.execute("CREATE TABLE test (" +
+            session.execute("CREATE TABLE " + tableName + "(" +
                     "message text," +
                     "testId text PRIMARY KEY," +
                     ")WITH COMPACT STORAGE;");
@@ -158,10 +191,29 @@ public class SessionUtil {
         }
     }
 
+    public void deleteTable(String keySpace, String tableName) throws SQLException, CustomException {
+
+        try {
+
+            Session session = cluster.connect(keySpace);
+
+            session.execute("DROP TABLE " + keySpace + "." + tableName);
+
+            logger.info("Connected to cluster: %s\n" +
+                    cluster.getClusterName());
+        } catch (Exception e) {
+            customException("Orm::createTable exception: ", e);
+        }
+    }
+
+
 
     public void createSchema(String keySpace) throws SQLException, CustomException {
 
         try {
+
+            this.setupPooling(this.controllerProperties.getCassandraIpAddress());
+
             Session session = cluster.connect();
 
             session.execute("CREATE KEYSPACE " + keySpace + " WITH replication" +
@@ -193,8 +245,13 @@ public class SessionUtil {
         ResultSet r = null;
 
         try {
+
+            this.setupPooling(this.controllerProperties.getCassandraIpAddress());
+
             Session session = cluster.connect(keySpace);
             r = session.execute(cql);
+
+            // cluster.close();
         }
         catch (Exception e)
         {
@@ -229,6 +286,7 @@ public class SessionUtil {
     public String setRestaurants(String keySpace, String restaurantId, String cuisine, String seating) throws SQLException, Exception, CustomException {
 
         try {
+            this.setupPooling(this.controllerProperties.getCassandraIpAddress());
             Session session = cluster.connect(keySpace);
 
             //String cql = "SELECT * FROM restaurants.restaurantId WHERE restaurantId =\" + \"'\" + restaurantId + \"'\" +  \"allow filtering;";
@@ -257,18 +315,31 @@ public class SessionUtil {
         return "500/Error: Orm::setRestaurants Exception";
     }
 
-    public ArrayList<String> getRestaurants(ResultSet results) throws SQLException, Exception, CustomException {
+    public ArrayList<String> getRestaurants(ResultSet results, String keySpace) throws SQLException, Exception, CustomException {
         ArrayList<String> queryResults = new ArrayList<String>();
 
-        for (Row row : results) {
+        try {
 
-            queryResults.add(String.format("%-20s\t%-20s\t%-20s\n",
-                    row.getString("cuisine"),
-                    row.getString("seating"),
-                    row.getString("restaurantId")));
+            this.setupPooling(this.controllerProperties.getCassandraIpAddress());
+            Session session = cluster.connect(keySpace);
+
+            for (Row row : results) {
+
+                queryResults.add(String.format("%-20s\t%-20s\t%-20s\n",
+                        row.getString("cuisine"),
+                        row.getString("seating"),
+                        row.getString("restaurantId")));
+            }
+
+            return queryResults;
+
+        }
+        catch (Exception e) {
+            customException("Orm::getRestaurants exception: ", e);
         }
 
         return queryResults;
+
     }
 
     public void createTablesTable(String keySpace) throws SQLException, CustomException {
@@ -315,18 +386,27 @@ public class SessionUtil {
     }
 
 
-    public ArrayList<String> getTables(ResultSet results) {
-
-
+    public ArrayList<String> getTables(ResultSet results, String keySpace) {
 
         ArrayList<String> queryResults = new ArrayList<String>();
 
-        for (Row row : results) {
+        try {
+            Session session = cluster.connect(keySpace);
 
-            queryResults.add(String.format("%-20s\t%-20s\t%-20s\n",
-                    row.getString("restaurantId"),
-                    row.getString("seatNumber"),
-                    row.getString("tableId")));
+            for (Row row : results) {
+
+                queryResults.add(String.format("%-20s\t%-20s\t%-20s\n",
+                        row.getString("restaurantId"),
+                        row.getString("seatNumber"),
+                        row.getString("tableId")));
+            }
+
+            return queryResults;
+
+        }
+        catch (Exception e) {
+         customException("Orm::getRestaurants exception: ", e);
+
         }
 
         return queryResults;

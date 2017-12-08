@@ -73,7 +73,9 @@ public class CassandraDriverITest {
             p.createSchema(keySpaceName);
 
 
-            p.createTable(keySpaceName);
+            p.createTable(keySpaceName, "test");
+
+            p.deleteTable(keySpaceName, "test");
 
             p.close();
         } catch (Exception e) {

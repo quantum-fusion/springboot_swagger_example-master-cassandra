@@ -1,1 +1,1 @@
-docker run -it -p 8080:8080 joethecoder2/spring-boot-web cassandra_ip=127.0.0.1 cassandra_port=9042
+docker run -d -p 8080:8080 -p 9042:9042 joethecoder2/spring-boot-web cassandra_ip=127.0.0.1 cassandra_port=9042

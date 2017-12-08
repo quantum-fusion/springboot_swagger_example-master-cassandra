@@ -27,6 +27,7 @@ import guru.springframework.domain.Product;
 import guru.springframework.domain.Restaurant;
 import guru.springframework.domain.Table;
 import guru.springframework.services.ProductService;
+import guru.springframework.util.CustomException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -42,6 +43,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import guru.springframework.cassandra.SessionUtil;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 // import org.springframework.ui.Model;
@@ -56,63 +58,105 @@ public class RestaurantController {
     @Autowired
     private guru.springframework.cassandra.SessionUtil p;
 
-    String propertiesIpaddress = "127.0.0.1";
-
-
-
     public RestaurantController() {
 
     }
 
     @Autowired
-    RestaurantController(SessionUtil s) {
+    RestaurantController(SessionUtil s) throws CustomException {
 
         this.p = s;
 
         this.p.controllerProperties = Singleton.getInstance( );
 
+
         try {
 
-            if(this.p.controllerProperties.getCassandraIpAddress().equals("")) {
-                p.setupPooling(propertiesIpaddress);
+            if(this.p.controllerProperties.getCassandraIpAddress().equals("127.0.0.1")) {
+                //p.connect(this.p.controllerProperties.getCassandraIpAddress());
+                p.setupPooling(this.p.controllerProperties.getCassandraIpAddress());
+                logger.info("RestaurantController::RestaurantController: cassandraIPaddress" + this.p.controllerProperties.getCassandraIpAddress());
+            }
+            else if(this.p.controllerProperties.getCassandraIpAddress().equals(""))
+            {
+                //p.connect(this.p.controllerProperties.getCassandraIpAddress());
+                p.setupPooling(this.p.controllerProperties.getCassandraIpAddress());
+                logger.info("RestaurantController::RestaurantController: cassandraIPaddress" + this.p.controllerProperties.getCassandraIpAddress());
             }
             else
             {
+                //p.connect(this.p.controllerProperties.getCassandraIpAddress());
                 p.setupPooling(this.p.controllerProperties.getCassandraIpAddress());
-
                 logger.info("RestaurantController::RestaurantController: cassandraIPaddress" + this.p.controllerProperties.getCassandraIpAddress());
             }
 
-            if(this.p.controllerProperties.getCassandraPort().equals("")) {
+            if(this.p.controllerProperties.getCassandraPort().equals("9042")) {
+                logger.info("RestaurantController::RestaurantController: cassandraPort" + this.p.controllerProperties.getCassandraPort());
+            }
+            else if(this.p.controllerProperties.getCassandraPort().equals("")) {
+                logger.info("RestaurantController::RestaurantController: cassandraPort" + this.p.controllerProperties.getCassandraPort());
+            }
+            else
+            {
                 logger.info("RestaurantController::RestaurantController: cassandraPort" + this.p.controllerProperties.getCassandraPort());
             }
 
-           // s.connect("127.0.0.1");
-           //  s.setupPooling("127.0.0.1");
-           //   s.createSchema("accounts");
+            this.p.createSchema("accounts");
+            logger.info("RestaurantController::RestaurantController:createSchema executed");
+            this.p.createTable("accounts", "test");
+            this.p.deleteTable("accounts", "test");
 
-            logger.error("before createRestaurantTable");
-            s.createRestaurantTable("accounts");
-            logger.error("after createRestaurantTable");
-
-            s.createTablesTable("accounts");
-            s.createIndex("accounts");
         } catch (Exception e) {
             logger.error("ServletController::ServletController(): Here is some ERROR: " + e);
         }
 
     }
 
-    @ApiOperation(value = "Rest Server command arguments")
-    @RequestMapping(value = "/arguments", method= RequestMethod.POST, produces = "text/plain")
-    public String testarguments() {
+    @ApiOperation(value = "Local Database Server Initialization")
+    @RequestMapping(value = "/localarguments", method= RequestMethod.POST, produces = "text/plain")
+    public String localarguments() {
 
-        logger.info("Rest Server arguments!");
+        this.p.setuplocalDatabase("accounts");
+
+        logger.info("Local Rest Server arguments!:" + this.p.controllerProperties.getCassandraIpAddress() + ":" + this.p.controllerProperties.getCassandraPort());
 
         return this.p.controllerProperties.getCassandraIpAddress() + ":" + this.p.controllerProperties.getCassandraPort() + "\n";
     }
 
+    @ApiOperation(value = "Rest Server command arguments")
+    @RequestMapping(value = "/testarguments", method= RequestMethod.POST, produces = "text/plain")
+    public String testarguments(@RequestBody Singleton s ) {
 
+        this.p.setupDatabase(s.getCassandraIpAddress(), s.getCassandraPort());
+
+        logger.info("Configure Rest Server arguments!:" + this.p.controllerProperties.getCassandraIpAddress() + ":" + this.p.controllerProperties.getCassandraPort());
+
+        return this.p.controllerProperties.getCassandraIpAddress() + ":" + this.p.controllerProperties.getCassandraPort() + "\n";
+    }
+
+    @ApiOperation(value = "Report Database Server Initialization")
+    @RequestMapping(value = "/reportarguments", method= RequestMethod.POST, produces = "text/plain")
+    public String reportarguments() {
+
+        logger.info("Report Rest Server arguments!:" + this.p.controllerProperties.getCassandraIpAddress() + ":" + this.p.controllerProperties.getCassandraPort());
+
+        return this.p.controllerProperties.getCassandraIpAddress() + ":" + this.p.controllerProperties.getCassandraPort() + "\n";
+    }
+
+    @ApiOperation(value = "Setup Database Tables Initialization")
+    @RequestMapping(value = "/setupRestaurantDatabaseTables", method= RequestMethod.POST, produces = "text/plain")
+    public String setupRestaurantDatabaseTables () {
+
+        try {
+            this.p.setupRestaurantDatabaseTables("accounts");
+        }
+        catch (Exception e)
+        {
+          return "500/Error: RestaurantController::setupRestaurantDatabaseTables";
+        }
+
+        return "200/OK";
+    }
 
     @ApiOperation(value = "Greetings from Rest Server")
     @RequestMapping(value = "/", method= RequestMethod.POST, produces = "text/plain")
@@ -167,7 +211,7 @@ public class RestaurantController {
 
             p.setRestaurants("accounts",restaurant.getRestaurantId(), restaurant.getCuisine(), restaurant.getSeating());
 
-            logger.error("addRestaurant 200/OK");
+            logger.info("addRestaurant 200/OK");
 
             return "200/OK";
 
@@ -218,14 +262,17 @@ public class RestaurantController {
 
         ArrayList<String> restaurantList = new ArrayList<String>();
 
+        logger.error("Henry getRestaurants");
+
         String cql = "SELECT * FROM accounts.restaurants allow filtering;";
-        logger.debug("cql: " + cql);
+        logger.error("Henry cql: " + cql);
         try {
-            restaurantList = p.getRestaurants(p.querySchema("accounts", cql));
+            restaurantList = p.getRestaurants(p.querySchema("accounts", cql), "accounts");
         } catch (Exception e) {
             e.printStackTrace();
         }
         logger.debug("restaurantList: " + restaurantList);
+        logger.error("restaurantList: " + restaurantList);
 
         return restaurantList;
     }

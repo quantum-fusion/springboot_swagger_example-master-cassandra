@@ -20,15 +20,9 @@
 
 package guru.springframework.cassandra;
 
-import com.datastax.driver.core.Cluster;
-import com.datastax.driver.core.HostDistance;
-import com.datastax.driver.core.PoolingOptions;
+import com.datastax.driver.core.*;
 import com.datastax.driver.core.ProtocolOptions.Compression;
-import com.datastax.driver.core.SocketOptions;
-import com.datastax.driver.core.policies.ConstantReconnectionPolicy;
-import com.datastax.driver.core.policies.DCAwareRoundRobinPolicy;
-import com.datastax.driver.core.policies.DefaultRetryPolicy;
-import com.datastax.driver.core.policies.TokenAwarePolicy;
+import com.datastax.driver.core.policies.*;
 import org.springframework.beans.factory.FactoryBean;
 
 /**
@@ -67,16 +61,19 @@ public class ClusterFactory implements FactoryBean<Cluster> {
         socketOptions.setConnectTimeoutMillis(connectTimeoutMillis);
         socketOptions.setKeepAlive(keepAlive);
         socketOptions.setReadTimeoutMillis(readTimeOutMillis);
-        
+
         final Cluster.Builder builder =
                 new Cluster.Builder().addContactPoints(cassandraPoints)
-                		             .withPoolingOptions(pools)
-                		             .withSocketOptions(socketOptions)
-                		             .withLoadBalancingPolicy(new TokenAwarePolicy(new DCAwareRoundRobinPolicy(dataCenterName)))
-                		             .withRetryPolicy(DefaultRetryPolicy.INSTANCE)
-                		             .withReconnectionPolicy(new ConstantReconnectionPolicy(connectionRetryMs))
-                		             .withCompression(Compression.LZ4);
-        
+                .withPoolingOptions(pools)
+                .withSocketOptions(socketOptions)
+                // .withLoadBalancingPolicy(new TokenAwarePolicy(new DCAwareRoundRobinPolicy(dataCenterName)))
+                // by default, statements will be considered non-idempotent
+                .withQueryOptions(new QueryOptions().setDefaultIdempotence(false))
+                // make your retry policy idempotence-aware
+                .withRetryPolicy(new IdempotenceAwareRetryPolicy(DefaultRetryPolicy.INSTANCE))
+                .withReconnectionPolicy(new ConstantReconnectionPolicy(connectionRetryMs))
+                .withCompression(Compression.LZ4);
+
         return builder.build();
     }
 

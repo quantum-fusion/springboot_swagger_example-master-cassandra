@@ -420,6 +420,8 @@ start_rpc: true
 #
 # Set rpc_address OR rpc_interface, not both. Interfaces must correspond
 # to a single address, IP aliasing is not supported.
+# rpc_address: localhost
+
 #
 # Leaving rpc_address blank has the same effect as on listen_address
 # (i.e. it will be based on the configured hostname of the node).
