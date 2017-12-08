@@ -13,9 +13,10 @@
 - Application.properties supports changing port numbers
 
 - Databases currently supported
-- DAO Layer Design Pattern (CRUD operations to Cassandra)
+- ORM Layer Design Pattern (CRUD operations to Cassandra)
 - JPA Layer Design Pattern (CRUD operations to H2)
-- Cassandra Datastax support (https://www.datastax.com/products/datastax-enterprise)
+- Cassandra Datastax support  (https://www.datastax.com/products/datastax-enterprise)
+- Datastax Driver v3.0
 - H2 in memory database
 
 Tools:
@@ -46,7 +47,7 @@ cd ..
 mvn clean install
 
 
-#Step3: Run service
+#Step3: Run service locally
 java -jar ./target/spring-boot-web-0.0.1-SNAPSHOT.jar
 
 #Step4: Run web browser to generate Swagger docs and tests
@@ -54,8 +55,11 @@ java -jar ./target/spring-boot-web-0.0.1-SNAPSHOT.jar
 Execute localhost:8080/v2/api-docs in web browser.
 Execute localhost:8080/swagger-ui.html in web browser.
 
+# Step5: configure service IP address for remote database ipaddress
+java -jar ./target/spring-boot-web-0.0.1-SNAPSHOT.jar -Dcassandra_ip=<remoteIP> -Dcassandra_port=9042
 
-#Step5: Build Docker image (see ./dockerbuild/README.md)
+
+#Step5(Not currently supported due to limitation in datastax driver v3): Build Docker image (see ./dockerbuild/README.md)
 
 cd ./dockerbuild
 
@@ -63,7 +67,7 @@ cd ./dockerbuild
 
 ./upload.script
 
-#Step6: Install Kubernetes, and Launch REST service (see ./Kubernetes/README.md)
+#Step6(Not currently supported due to limitation in Docker with datastax driver v3): Install Kubernetes, and Launch REST service (see ./Kubernetes/README.md)
 
 cd ./Kubernetes
 
