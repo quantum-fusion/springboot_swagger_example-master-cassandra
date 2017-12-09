@@ -1,1 +1,3 @@
-docker run -p 8080:8080 -p 9042:9042 joethecoder2/spring-boot-web cassandra_ip=127.0.0.1 cassandra_port=9042
+# docker run -p 8080:8080 -p 9042:9042 joethecoder2/spring-boot-web cassandra_ip=127.0.0.1 cassandra_port=9042
+
+# docker run --name spring-boot-web -p 8080:8080 -p 127.0.0.1:9042:9042 -p 9160:9160 joethecoder2/spring-boot-web TCP4-LISTEN:9042 TCP4:172.17.0.2:9042 

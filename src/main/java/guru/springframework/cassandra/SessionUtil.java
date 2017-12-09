@@ -90,10 +90,13 @@ public class SessionUtil {
 
         // https://stackoverflow.com/questions/16783725/error-while-connecting-to-cassandra-using-java-driver-for-apache-cassandra-1-0-f
         // http://docs.datastax.com/en/developer/java-driver/3.1/manual/native_protocol/
+
+        logger.error("SessionUtil:connect:ipaddress" + ipAddress);
+
         try {
             cluster = Cluster.builder()
                     .addContactPoint(ipAddress)
-                    .withProtocolVersion(ProtocolVersion.V2)
+                    .withProtocolVersion(ProtocolVersion.V3) //V4
                     .build();
 
             // metadata = cluster.getMetadata();
@@ -156,9 +159,11 @@ public class SessionUtil {
                     ipAddress
             };
 
+            logger.error("setupPooling:cassandraNodes:" + cassandraNodes);
+
             // https://stackoverflow.com/questions/16783725/error-while-connecting-to-cassandra-using-java-driver-for-apache-cassandra-1-0-f
             // http://docs.datastax.com/en/developer/java-driver/3.1/manual/native_protocol/
-            final Cluster.Builder builder = new Cluster.Builder().addContactPoints(cassandraNodes).withProtocolVersion(ProtocolVersion.V2).withPoolingOptions(pools);
+            final Cluster.Builder builder = new Cluster.Builder().addContactPoints(cassandraNodes).withProtocolVersion(ProtocolVersion.V3).withPoolingOptions(pools); //ProtocolVersion.V4
 
             cluster = builder.build();
             // metadata = cluster.getMetadata();

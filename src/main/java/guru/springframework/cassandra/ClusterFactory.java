@@ -23,12 +23,16 @@ package guru.springframework.cassandra;
 import com.datastax.driver.core.*;
 import com.datastax.driver.core.ProtocolOptions.Compression;
 import com.datastax.driver.core.policies.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
 
 /**
  * Created with IntelliJ IDEA.
  */
 public class ClusterFactory implements FactoryBean<Cluster> {
+
+    private static final Logger logger = LoggerFactory.getLogger(ClusterFactory.class);
 
     int coreConnectionPerLocalHost;
     int maxConnectionPerLocalHost;
@@ -50,6 +54,7 @@ public class ClusterFactory implements FactoryBean<Cluster> {
         }
 
         String[] cassandraPoints = cassandraNodes.split(";");
+        logger.error("ClusterFactory:cassandraPoints:" + cassandraPoints);
 
         PoolingOptions pools = new PoolingOptions();
         pools.setCoreConnectionsPerHost(HostDistance.LOCAL, coreConnectionPerLocalHost);
@@ -63,7 +68,7 @@ public class ClusterFactory implements FactoryBean<Cluster> {
         socketOptions.setReadTimeoutMillis(readTimeOutMillis);
 
         final Cluster.Builder builder =
-                new Cluster.Builder().addContactPoints(cassandraPoints)
+                new Cluster.Builder().addContactPoints("127.0.0.1") // cassandraPoints)
                 .withPoolingOptions(pools)
                 .withSocketOptions(socketOptions)
                 // .withLoadBalancingPolicy(new TokenAwarePolicy(new DCAwareRoundRobinPolicy(dataCenterName)))

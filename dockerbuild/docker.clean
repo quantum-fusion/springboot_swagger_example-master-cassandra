@@ -1,4 +1,8 @@
 
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+
 docker images -a
 
-docker rmi -f joethecoder2/spring-boot-web 
+docker rmi -f joethecoder2/spring-boot-web
+
