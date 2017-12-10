@@ -1,6 +1,6 @@
 # Kubernetes Installation Instructions
 
-## Step1(Optional): Install KubeCtl Kubernetes on MAC/OS
+## Step1: Install KubeCtl Kubernetes on MAC/OS
 
  https://kubernetes.io/docs/tasks/tools/install-kubectl/
 
@@ -18,7 +18,7 @@
 
  %./minikube.run
 
-## Step3(Optional): Run a Hello World Application using the running Kubernetes cluster
+## Step3: Run a Hello World Application using the running Kubernetes cluster
 
  https://kubernetes.io/docs/tasks/access-application-cluster/service-access-application-cluster/
 
