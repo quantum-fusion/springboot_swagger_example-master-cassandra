@@ -1,7 +1,7 @@
 
 REST Spring Boot with Database and Swagger Interfaces:
 
-#Key Benefits of Spring Boot REST Server with Swagger
+//Key Benefits of Spring Boot REST Server with Swagger
 
 - Spring Boot version spring-boot-starter-parent 1.5.3.RELEASE with Datastax Driver v3.3.2
 - Datastax Driver Protocol.V3
@@ -31,11 +31,12 @@ Known Limitations:
 - Do not currently support JPA based Cassandra CRUD calls, like Spring-Data for cassandra (https://projects.spring.io/spring-data-cassandra/#quick-start)
 
 
-Installation Instructions:
+#Installation Instructions:
 
-# spring-boot_swagger_example-master-cassandra Project
+// spring-boot_swagger_example-master-cassandra Project
 
-#Step1 or Step2: get Apache Cassandra running
+##Step1 or Step2: 
+get Apache Cassandra running
 
 cd apache-cassandra*
 
@@ -43,32 +44,36 @@ cd apache-cassandra*
 
 cd ..
 
-#Step2: Run cassandra in Docker
+##Step2: Run cassandra in Docker
 ./runDocker-apache-cassandra-latest 
 
-#Step3: Build project
+##Step3: 
+Build project
 
 mvn clean install
 
-#Step4: Run service locally
+##Step4: Run service locally
 java -jar ./target/spring-boot-web-0.0.1-SNAPSHOT.jar
 
-#Step5: Run web browser to generate Swagger docs and tests
+##Step5: Run web browser to generate Swagger docs and tests
 
 Execute localhost:8080/v2/api-docs in web browser.
 Execute localhost:8080/swagger-ui.html in web browser.
 
-# Step6: configure service IP address for remote database ipaddress
+## Step6:
+configure service IP address for remote database ipaddress
 java -jar ./target/spring-boot-web-0.0.1-SNAPSHOT.jar -Dcassandra_ip=<remoteIP> -Dcassandra_port=9042
 
-#Step7(Optional):
+##Step7
+(Optional):
 Configure remote IPaddress and Port using REST API
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: text/plain' -d '{ \ 
    "cassandraIpAddress": "<remoteIP>", \ 
    "cassandraPort": "9042" \ 
  }' 'http://localhost:8080/restaurant/testarguments'
 
-#Step8(Not currently supported due to limitation in datastax driver v3): Build Docker image (see ./dockerbuild/README.md)
+##Step8
+(Not currently supported due to limitation in datastax driver v3): Build Docker image (see ./dockerbuild/README.md)
 
 cd ./dockerbuild
 
@@ -76,11 +81,12 @@ cd ./dockerbuild
 
 ./upload.script
 
-# current limitation on running REST service in Docker, and pointing to local 127.0.0.1 for cassandra node, and exposing Cassandra node to Docker.
+// current limitation on running REST service in Docker, and pointing to local 127.0.0.1 for cassandra node, and exposing Cassandra node to Docker.
 
 docker run -d -p 8080:8080 -p 9042:9042 joethecoder2/spring-boot-web cassandra_ip=127.0.0.1 cassandra_port=9042
 
-#Step9(Not currently supported due to limitation in Docker with datastax driver v3): Install Kubernetes, and Launch REST service (see ./Kubernetes/README.md)
+##Step9
+(Not currently supported due to limitation in Docker with datastax driver v3): Install Kubernetes, and Launch REST service (see ./Kubernetes/README.md)
 
 cd ./Kubernetes
 
@@ -90,7 +96,7 @@ cd ./Kubernetes
 
 ./kubectl.test
 
-# Cleanup
+## Cleanup
 
 ./minikube.stop
 
