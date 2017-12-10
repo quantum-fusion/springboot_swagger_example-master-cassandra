@@ -26,7 +26,7 @@ Tools:
 DataStax CQL IDE Editor for MACOS (http://docs.datastax.com/en/dse/5.1/dse-dev/datastax_enterprise/devcenter/dcToc.html )
 
 Known Limitations:
-- Do not currently support Datastax driver with REST inside a Docker container, due to port restrictions on local 127.0.0.1 and port binding conflicts. 
+- Do not currently support Datastax driver with REST inside a Docker container, due to port restrictions on local 127.0.0.1 and port binding conflicts. REST Spring Controller test inside Docker (See ./dockerbuild/docker.test)
 - Do not currently support JPA based Cassandra CRUD calls, like Spring-Data for cassandra (https://projects.spring.io/spring-data-cassandra/#quick-start)
 
 
