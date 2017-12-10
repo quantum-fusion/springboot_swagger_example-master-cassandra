@@ -30,6 +30,12 @@ Known Limitations:
 - Do not currently support Datastax driver with REST inside a Docker container, due to port restrictions on local 127.0.0.1 and port binding conflicts. REST Spring Controller test inside Docker (See ./dockerbuild/docker.test)
 - Do not currently support JPA based Cassandra CRUD calls, like Spring-Data for cassandra (https://projects.spring.io/spring-data-cassandra/#quick-start)
 
+Integration Test for Docker limitations:
+- Consider Docker CQL test for 2 separate Docker images (https://yurisubach.com/2016/03/24/cassandra-docker-test-cluster/ )
+   - Determine if TransportException from Datastax driver occurs.
+- Consider creating Docker image for Spring Data Cassandra (https://projects.spring.io/spring-data-cassandra/#quick-start)
+   - Determine if TransportException from Datastax driver occurs.
+
 
 ## Installation Instructions:
 
