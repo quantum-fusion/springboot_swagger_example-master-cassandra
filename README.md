@@ -1,4 +1,5 @@
 
+REST Spring Boot with Database and Swagger Interfaces:
 
 #Key Benefits of Spring Boot REST Server with Swagger
 
@@ -30,14 +31,7 @@ Known Limitations:
 - Do not currently support JPA based Cassandra CRUD calls, like Spring-Data for cassandra (https://projects.spring.io/spring-data-cassandra/#quick-start)
 
 
- .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.4.2.RELEASE)
-
+Installation Instructions:
 
 # spring-boot_swagger_example-master-cassandra Project
 
