@@ -15,6 +15,7 @@
 - Supports Session based management using JWT Tokens (https://github.com/quantum-fusion/aes-256-encryption-utility)
 - Supports Diffie Hellman (https://github.com/quantum-fusion/aes-256-encryption-utility)
 - Supports REST based Android integration using AES256(PKCS5Padding) (https://github.com/quantum-fusion/aes-256-encryption-utility)
+- Mobile to REST Server End to End encryption (see https://www.whatsapp.com/security/WhatsApp-Security-Whitepaper.pdf)
 
 - Docker support with Kubernetes supports scaling REST Spring Boot on AWS, Azure, IBM.
 - Spring Boot supports Cloud Foundry CLI for scaling on AWS, Azure, IBM.
