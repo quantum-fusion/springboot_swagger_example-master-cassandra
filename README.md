@@ -1,8 +1,9 @@
 
 # REST Spring Boot with Database and Swagger Interfaces:
 
-## Key Benefits of Spring Boot REST Server with Swagger
+## Key Benefits of Spring Boot REST Server with OpenAPI standard
 
+- OpenAPI standard supported by Swagger2 (https://swagger.io/blog/difference-between-swagger-and-openapi/)
 - Spring Boot version spring-boot-starter-parent 1.5.3.RELEASE with Datastax Driver v3.3.2
 - Datastax Driver Protocol.V3
 - REST API Controller interface supports multiple controllers
