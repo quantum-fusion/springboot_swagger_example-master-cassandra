@@ -11,6 +11,9 @@
 - Self documenting Swagger API interface (https://springframework.guru/spring-boot-restful-api-documentation-with-swagger-2/)
 - Swagger In line tests from web browser
 - Standard error handling interface for Log4j
+- Supports AES256(PKCS5) Encryption of Data at Rest, and Data Transport (https://github.com/quantum-fusion/aes-256-encryption-utility)
+- Supports Session based management using JWT Tokens (https://github.com/quantum-fusion/aes-256-encryption-utility)
+- Supports Diffie Hellman (https://github.com/quantum-fusion/aes-256-encryption-utility)
 
 - Docker support with Kubernetes supports scaling REST Spring Boot on AWS, Azure, IBM.
 - Spring Boot supports Cloud Foundry CLI for scaling on AWS, Azure, IBM.
