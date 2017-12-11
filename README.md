@@ -1,5 +1,5 @@
 
-# REST Spring Boot with Database and Swagger Interfaces:
+# REST Spring Boot with Database and OpenAPI Swagger Interfaces:
 
 ## Key Benefits of Spring Boot REST Server with OpenAPI standard
 
