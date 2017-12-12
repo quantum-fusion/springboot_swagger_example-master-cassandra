@@ -82,7 +82,7 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: text/pl
    "cassandraPort": "9042" \ 
  }' 'http://localhost:8080/restaurant/testarguments'
 
-## Step8: (Not currently supported due to limitation in datastax driver v3): Build Docker image (see ./dockerbuild/README.md)
+## Step8: Build Docker image (see ./dockerbuild/README.md)
 
 cd ./dockerbuild
 
@@ -90,18 +90,22 @@ cd ./dockerbuild
 
 ./upload.script
 
-// current limitation on running REST service in Docker, and pointing to local 127.0.0.1 for cassandra node, and exposing Cassandra node to Docker.
+cd ..
 
-docker run -d -p 8080:8080 -p 9042:9042 joethecoder2/spring-boot-web cassandra_ip=127.0.0.1 cassandra_port=9042
+./runDockerApplication
 
-## Step9: (Not currently supported due to limitation in Docker with datastax driver v3): Install Kubernetes, and Launch REST service (see ./Kubernetes/README.md)
+./testDockerApplication
+
+## Step9: (Not currently supported due to insufficient testing of remote cassandra node or kubernetes cassandra node ip address): Install Kubernetes, and Launch REST service (see ./Kubernetes/README.md)
 
 cd ./Kubernetes
 
 ./minikube.run
 
+### must manually delete prior images and pods from ghost defunct pod services
 ./minikube.setup
 
+### must check ip addresses for kubernetes master ip address
 ./kubectl.test
 
 ## Cleanup
