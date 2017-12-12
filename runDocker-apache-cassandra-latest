@@ -1,3 +1,5 @@
 
-docker run --name cassandra -m 2g -p 127.0.0.1:9042:9042 -p 127.0.0.1:9160:9160 -d cassandra
+# docker run --name cassandra -m 2g -p 127.0.0.1:9042:9042 -p 127.0.0.1:9160:9160 -d cassandra
+
+docker run --name cassandra -m 1g  -d cassandra
 

@@ -1,0 +1,16 @@
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: text/plain' -d '{ \ 
+   "cassandraIpAddress": "172.17.0.3", \ 
+   "cassandraPort": "9042" \ 
+ }' 'http://localhost:8080/restaurant/testarguments'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: text/plain' 'http://localhost:8080/restaurant/setupRestaurantDatabaseTables'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: text/plain' -d '{ \ 
+   "cuisine": "french", \ 
+   "restaurantId": "ABC678", \ 
+   "seating": "20" \ 
+ }' 'http://localhost:8080/restaurant/addRestaurant'
+
+
+curl -X GET --header 'Accept: application/json' 'http://localhost:8080/restaurant/getRestaurants' 

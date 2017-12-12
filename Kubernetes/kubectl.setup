@@ -3,6 +3,8 @@
 
 # kubectl delete pods --all --force
 
+kubectl delete deployment spring-boot-web
+
 kubectl delete pods spring-boot-web-demo
 
 kubectl create -f ./setupPod.yaml
@@ -19,9 +21,6 @@ kubectl get rs
 #kubectl delete deployment <service>
 #
 
-
-# kubectl describe pod spring-boot
-
 kubectl describe pod spring-boot-web
 
 # kubectl logs spring-boot-web-demo --previous
@@ -34,11 +33,9 @@ kubectl logs spring-boot-web-demo
 
 kubectl delete deployment spring-boot-web
 
-kubectl run spring-boot-web --replicas=2 --image=joethecoder2/spring-boot-web --port=8080
+kubectl run spring-boot-web --replicas=2 --labels="run=load-balancer-example" --image=joethecoder2/spring-boot-web --port=8080
 
 kubectl get rs
-
-# kubectl run spring-boot-web-replica --replicas=2 --labels="run=load-balancer-example" --image=joethecoder2/spring-boot-web --port=8080
 
 kubectl get deployments spring-boot-web
 
@@ -49,11 +46,11 @@ kubectl get replicasets
 
 kubectl describe replicasets
 
-kubectl expose deployment spring-boot-web --type=NodePort
+# kubectl expose deployment spring-boot-web --type=NodePort
 
-# kubectl expose deployment spring-boot-web --type=NodePort --name=example-service
+kubectl expose deployment spring-boot-web --type=NodePort --name=example-service
 
-kubectl describe services spring-boot-web
+kubectl describe services example-service
 
 # kubectl get pods --selector="run=load-balancer-example" --output=wide
 
@@ -65,5 +62,5 @@ kubectl get pods --show-all
 
 kubectl describe nodes
 
-minikube service spring-boot-web
+minikube service example-service
 

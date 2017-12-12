@@ -159,11 +159,11 @@ public class SessionUtil {
                     ipAddress
             };
 
-            logger.error("setupPooling:cassandraNodes:" + cassandraNodes);
+           // logger.error("setupPooling:cassandraNodes:" + cassandraNodes);
 
             // https://stackoverflow.com/questions/16783725/error-while-connecting-to-cassandra-using-java-driver-for-apache-cassandra-1-0-f
             // http://docs.datastax.com/en/developer/java-driver/3.1/manual/native_protocol/
-            final Cluster.Builder builder = new Cluster.Builder().addContactPoints(cassandraNodes).withProtocolVersion(ProtocolVersion.V3).withPoolingOptions(pools); //ProtocolVersion.V4
+            final Cluster.Builder builder = new Cluster.Builder().addContactPoints(ipAddress).withProtocolVersion(ProtocolVersion.V3).withPoolingOptions(pools); //ProtocolVersion.V4
 
             cluster = builder.build();
             // metadata = cluster.getMetadata();
@@ -218,6 +218,8 @@ public class SessionUtil {
         try {
 
             this.setupPooling(this.controllerProperties.getCassandraIpAddress());
+
+            logger.error("createSchema::ipaddress: " + this.controllerProperties.getCassandraIpAddress());
 
             Session session = cluster.connect();
 

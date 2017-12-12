@@ -127,9 +127,28 @@ public class RestaurantController {
     @RequestMapping(value = "/testarguments", method= RequestMethod.POST, produces = "text/plain")
     public String testarguments(@RequestBody Singleton s ) {
 
-        this.p.setupDatabase(s.getCassandraIpAddress(), s.getCassandraPort());
+        try {
 
-        logger.info("Configure Rest Server arguments!:" + this.p.controllerProperties.getCassandraIpAddress() + ":" + this.p.controllerProperties.getCassandraPort());
+            this.p.setupDatabase(s.getCassandraIpAddress(), s.getCassandraPort());
+
+            logger.info("Configure Rest Server arguments!:" + this.p.controllerProperties.getCassandraIpAddress() + ":" + this.p.controllerProperties.getCassandraPort());
+
+            this.p.setupPooling(s.getCassandraIpAddress());
+
+
+            this.p.createSchema("accounts");
+            logger.info("RestaurantController::RestaurantController:createSchema executed");
+            this.p.createTable("accounts", "test");
+            this.p.deleteTable("accounts", "test");
+
+        }
+        catch (Exception e)
+        {
+
+            logger.error("testarguments: " + e);
+        }
+
+
 
         return this.p.controllerProperties.getCassandraIpAddress() + ":" + this.p.controllerProperties.getCassandraPort() + "\n";
     }
