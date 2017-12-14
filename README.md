@@ -37,7 +37,10 @@ DataStax CQL IDE Editor for MACOS (http://docs.datastax.com/en/dse/5.1/dse-dev/d
 
 Known Limitations:
 - Do not currently support JPA based Cassandra CRUD calls, like Spring-Data for cassandra (https://projects.spring.io/spring-data-cassandra/#quick-start)
-- Do not support MongoDB via JPA connector, but could consider integration test like spring-data MongoDB.
+- Do not support MongoDB via JPA connector, but could consider integration test like spring-data MongoDB. (https://projects.spring.io/spring-data-mongodb/)
+- Do not support MySQL via JPA connector, but could consider integration test. (https://spring.io/guides/gs/accessing-data-mysql/)
+- Do not support Postgres via JPA connector, but could consider integration test. (https://springframework.guru/configuring-spring-boot-for-postgresql/)
+- Do not support Redis, but could consider integration test. (https://projects.spring.io/spring-data-redis/)
 
 Integration Tests to Consider:
 - Consider Docker CQL test for 2 separate Docker images (https://yurisubach.com/2016/03/24/cassandra-docker-test-cluster/ )
