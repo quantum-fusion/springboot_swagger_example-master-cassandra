@@ -50,11 +50,22 @@ Cassandra Cluster providers to Consider:
 - Spotify Cassandra Quick start (https://github.com/spotify/docker-cassandra)
 - Multi Node Cassandra Cluster on Kubernetes (https://github.com/vyshane/cassandra-kubernetes)
 
+## Setup Options 1 or 2 or 3 or All:
+- 1. Run Local SpringBoot and Cassandra single node.
+- 2. Run Local Docker SpringBoot and Local Docker Cassandra single node.
+- 3. Run Local Kubernetes SpringBoot and remote AWS Bitnami Cassandra single node, requires configurable IP and login credentials.
+- All: SpringBoot will run on all platforms and support remote AWS Bitnami Cassandra single node, with configurable IP address and login credentials.
+
+
 ## Installation Instructions:
 
 // spring-boot_swagger_example-master-cassandra Project
 
-## Step1 or Step2: get Apache Cassandra running
+## Build project
+
+mvn clean install
+
+## Step1: get Apache Cassandra running locally or in Docker (see Step2).
 
 cd apache-cassandra*
 
@@ -62,33 +73,28 @@ cd apache-cassandra*
 
 cd ..
 
-## Step2: Run cassandra in Docker
-./runDocker-apache-cassandra-latest 
-
-## Step3: Build project
-
-mvn clean install
-
-## Step4: Run service locally
+## Step2: Run service locally
 java -jar ./target/spring-boot-web-0.0.1-SNAPSHOT.jar
 
-## Step5: Run web browser to generate Swagger docs and tests
+## Step3: Run web browser to generate Swagger docs and tests
 
 Execute localhost:8080/v2/api-docs in web browser.
 Execute localhost:8080/swagger-ui.html in web browser.
 
-## Step6: Configure service IP address for remote database ipaddress
-java -jar ./target/spring-boot-web-0.0.1-SNAPSHOT.jar -Dcassandra_ip=<remoteIP> -Dcassandra_port=9042
+## Step4: Configure service IP address for remote database ipaddress
+java -jar ./target/spring-boot-web-0.0.1-SNAPSHOT.jar -Dcassandra_ip=<remoteIP> -Dcassandra_port=9042 -Dlogin=cassandra -Dpassword=GN1aJxMnsWOR
 
-## Step7
+## Step5: REST based configuration for Kubernetes support of remote Cassandra nodes due to Google Kubernetes not supporting Templates. 
 (Optional):
-Configure remote IPaddress and Port using REST API
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: text/plain' -d '{ \ 
+ curl -X POST --header 'Content-Type: application/json' --header 'Accept: text/plain' -d '{ \ 
    "cassandraIpAddress": "<remoteIP>", \ 
-   "cassandraPort": "9042" \ 
+   "cassandraPort": "9042", \ 
+   "login": "cassandra", \ 
+   "password": "GN1aJxMnsWOR" \ 
  }' 'http://localhost:8080/restaurant/testarguments'
+ 
 
-## Step8: Build Docker image (see ./dockerbuild/README.md)
+## Step6: Build Docker image (see ./dockerbuild/README.md)
 
 cd ./dockerbuild
 
@@ -98,11 +104,13 @@ cd ./dockerbuild
 
 cd ..
 
+## Step7 (Optional): run Docker instances Locally
+
 ./runDockerApplication
 
 ./testDockerApplication
 
-## Step9: Install Kubernetes, and Launch REST service (see ./Kubernetes/README.md)
+## Step8 (Optional): Install Kubernetes, and Launch REST service (see ./Kubernetes/README.md)
 
 cd ./Kubernetes
 
