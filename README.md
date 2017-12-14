@@ -46,6 +46,10 @@ Integration Tests to Consider:
 - Consider Docker CQL test for 2 separate Docker images (https://yurisubach.com/2016/03/24/cassandra-docker-test-cluster/ )
 - Consider creating Docker image for Spring Data Cassandra (https://projects.spring.io/spring-data-cassandra/#quick-start)
 
+Cassandra Cluster providers to Consider:
+Spotify Cassandra Quick start (https://github.com/spotify/docker-cassandra)
+Multi Node Cassandra Cluster on Kubernetes (https://github.com/vyshane/cassandra-kubernetes)
+
 ## Installation Instructions:
 
 // spring-boot_swagger_example-master-cassandra Project
