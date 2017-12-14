@@ -96,7 +96,7 @@ cd ..
 
 ./testDockerApplication
 
-## Step9: (Not currently supported due to insufficient testing of remote cassandra node or kubernetes cassandra node ip address): Install Kubernetes, and Launch REST service (see ./Kubernetes/README.md)
+## Step9: Install Kubernetes, and Launch REST service (see ./Kubernetes/README.md)
 
 cd ./Kubernetes
 
