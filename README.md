@@ -47,8 +47,8 @@ Integration Tests to Consider:
 - Consider creating Docker image for Spring Data Cassandra (https://projects.spring.io/spring-data-cassandra/#quick-start)
 
 Cassandra Cluster providers to Consider:
-Spotify Cassandra Quick start (https://github.com/spotify/docker-cassandra)
-Multi Node Cassandra Cluster on Kubernetes (https://github.com/vyshane/cassandra-kubernetes)
+- Spotify Cassandra Quick start (https://github.com/spotify/docker-cassandra)
+- Multi Node Cassandra Cluster on Kubernetes (https://github.com/vyshane/cassandra-kubernetes)
 
 ## Installation Instructions:
 
