@@ -5,9 +5,9 @@
 
 - OpenAPI standard supported by Swagger2 (https://swagger.io/blog/difference-between-swagger-and-openapi/)
 - Spring Boot supports Cloud Native Computing Foundation standards (https://github.com/quantum-fusion/landscape)
-- Docker supported and setup via argument configuration at command line
+- Docker supported and setup via argument configuration at command line (see https://github.com/quantum-fusion/springboot_swagger_example-master-cassandra/blob/master/runDockerApplication)
 - Kubernetes supported and setup via REST remote configuration API
-- Spring Boot version spring-boot-starter-parent 1.5.3.RELEASE with Datastax Driver v3.3.2
+- Spring Boot version spring-boot-starter-parent 1.5.3.RELEASE with Datastax Driver v3.3.2 (see https://github.com/quantum-fusion/springboot_swagger_example-master-cassandra/blob/master/runJar)
 - Datastax Driver Protocol.V3
 - REST API Controller interface supports multiple controllers
 - Self documenting Swagger API interface (https://springframework.guru/spring-boot-restful-api-documentation-with-swagger-2/)
