@@ -7,11 +7,15 @@ public class Singleton {
 
     private String cassandraIpAddress = new String();
     private String cassandraPort = new String();
+    private String login = new String();
+    private String password = new String();
 
     private static Singleton singleInstance = new Singleton();
     private Singleton() {
         this.cassandraIpAddress = "";
         this.cassandraPort = "";
+        this.login = "";
+        this.password = "";
     }
     public static Singleton getInstance() {
         return singleInstance;
@@ -27,6 +31,10 @@ public class Singleton {
         this.cassandraPort = port;
     }
 
+    public void setLogin(String login) { this.login = login; }
+
+    public void setPassword(String password) { this.password = password; }
+
     public String getCassandraIpAddress()
     {
         return this.cassandraIpAddress;
@@ -36,6 +44,10 @@ public class Singleton {
     {
         return this.cassandraPort;
     }
+
+    public String getLogin() { return this.login; }
+
+    public String getPassword() { return this.password; }
 
     /* Other methods protected by singleton-ness */
     protected static void HelloWorldMethod( ) {

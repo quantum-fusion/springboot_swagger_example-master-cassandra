@@ -15,6 +15,8 @@ public class SpringBootWebApplication {
     public static void main(String[] args) {
         String cassandraIpaddress = new String("");
         String cassandraPort = new String("");
+        String login = new String("");
+        String password = new String("");
 
         final Logger logger = LoggerFactory.getLogger(SpringBootWebApplication.class);
 
@@ -26,24 +28,40 @@ public class SpringBootWebApplication {
             for (String s: args) {
 
                 if (s.contains("cassandra_ip")) {
-                    System.out.println("found cassandra ip");
 
                     cassandraIpaddress = s.substring(s.indexOf("=") + 1, s.length());
 
                     controllerProperties.setCassandraIpAddress(cassandraIpaddress);
 
-                    logger.info(cassandraIpaddress);
+                    logger.info("found cassandra ip " + cassandraIpaddress);
                 }
 
                 if (s.contains("cassandra_port")) {
-                    System.out.println("found cassandra port");
 
                     cassandraPort = s.substring(s.indexOf("=") + 1, s.length());
 
                     controllerProperties.setCassandraPort(cassandraPort);
 
-                    logger.info(cassandraPort);
+                    logger.info("found cassandra port " + cassandraPort);
                 }
+
+                if(s.contains("login")) {
+                    login = s.substring(s.indexOf("=") + 1, s.length());
+
+                    controllerProperties.setLogin(login);
+
+                    logger.info("found login " + login);
+                }
+
+                if(s.contains("password")) {
+                    password = s.substring(s.indexOf("=") + 1, s.length());
+
+                    controllerProperties.setPassword(password);
+
+                    logger.info("found password " + password);
+                }
+
+
             }
         }
 

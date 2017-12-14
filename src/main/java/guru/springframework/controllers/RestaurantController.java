@@ -101,6 +101,7 @@ public class RestaurantController {
                 logger.info("RestaurantController::RestaurantController: cassandraPort" + this.p.controllerProperties.getCassandraPort());
             }
 
+
             this.p.createSchema("accounts");
             logger.info("RestaurantController::RestaurantController:createSchema executed");
             this.p.createTable("accounts", "test");
@@ -130,12 +131,12 @@ public class RestaurantController {
         try {
 
             this.p.setupDatabase(s.getCassandraIpAddress(), s.getCassandraPort());
+            this.p.setupLogin(s.getLogin(), s.getPassword());
 
             logger.info("Configure Rest Server arguments!:" + this.p.controllerProperties.getCassandraIpAddress() + ":" + this.p.controllerProperties.getCassandraPort());
+            logger.info("Login: " + this.p.controllerProperties.getLogin() + " Password: " + this.p.controllerProperties.getPassword());
 
             this.p.setupPooling(s.getCassandraIpAddress());
-
-
             this.p.createSchema("accounts");
             logger.info("RestaurantController::RestaurantController:createSchema executed");
             this.p.createTable("accounts", "test");

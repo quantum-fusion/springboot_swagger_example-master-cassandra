@@ -17,6 +17,10 @@ spec:
       value: "127.0.0.1"
     - name: cassandra_port
       value: "9042"
+    - name: login
+      value: cassandra
+    - name: password
+      value: "GN1aJxMnsWOR"
     command: ["java","-jar", "spring-boot-web-0.0.1-SNAPSHOT.jar", "cassandra_ip=127.0.0.1", "cassandra_port=9042"]
     args: ["cassandra_ip=127.0.0.1", "cassandra_port=9042"]
   restartPolicy: OnFailure
