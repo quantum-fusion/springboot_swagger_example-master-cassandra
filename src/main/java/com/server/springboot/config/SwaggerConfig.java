@@ -19,7 +19,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("product")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("guru.springframework.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("com.server.springboot.controller"))
                 .paths(regex("/product.*"))
                 .build()
                 .apiInfo(metaData());
@@ -30,7 +30,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("restaurant")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("guru.springframework.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("com.server.springboot.controller"))
                 .paths(regex("/restaurant.*"))
                 .build()
                 .apiInfo(metaData());
