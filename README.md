@@ -36,7 +36,7 @@
 Tools:
 DataStax CQL IDE Editor for MACOS (http://docs.datastax.com/en/dse/5.1/dse-dev/datastax_enterprise/devcenter/dcToc.html )
 
-ScyllaDB Supported with Cassandra CQL:
+## ScyllaDB Supported with Cassandra CQL:
 https://hub.docker.com/r/scylladb/scylla/
 https://www.scylladb.com/download/amazon/
 
