@@ -36,6 +36,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.server.springboot.encryption.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 // import org.springframework.ui.Model;
@@ -47,10 +50,21 @@ import java.util.ArrayList;
 public class RestaurantController {
     private static final Logger logger = LoggerFactory.getLogger(RestaurantController.class);
 
+    private byte[] bobpublickeyEnc;
+
+    private void createServerSystemProperties() {
+        System.setProperty("keystore","src/test/resources/server-aes-keystore.jck");
+        System.setProperty("storepass","mystorepass");
+        System.setProperty("alias","jceksaes");
+        System.setProperty("keypass", "mykeypass");
+    }
+
     @Autowired
     private SessionUtil p;
 
     public RestaurantController() {
+
+        createServerSystemProperties();
 
     }
 
@@ -206,6 +220,63 @@ public class RestaurantController {
 
         return "greeting info message" + json;
     }
+
+    @ApiOperation(value = "post Alice Public Key")
+    @RequestMapping(value = "/postAlicePublicKey", method= {RequestMethod.POST}, produces = "text/plain")
+    public void postAlicePublicKey(@RequestBody String json) {
+
+        PublicKeyEnc mypub = new PublicKeyEnc();
+
+        try {
+        String mode = "USE_SKIP_DH_PARAMS";
+
+        // read in Bob's public key certificates
+        createServerSystemProperties();
+
+        DHKeyAgreement2 keyAgree = new DHKeyAgreement2();
+
+        mode = "GENERATE_DH_PARAMS";
+
+        keyAgree.setup(mode);
+
+        logger.info("greeting diffieHellman" + json);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+
+                PublicKeyEnc alicepublickeyEnc = new PublicKeyEnc();
+
+                alicepublickeyEnc = mapper.readValue(json, PublicKeyEnc.class);
+
+           //     System.out.println("alicepublickeyEnc:" + alicepublickeyEnc.getPublicKeyEnc().toString());
+
+                byte[] bobpublickeyEnc = keyAgree.BobKeyGenerate(alicepublickeyEnc.getPublicKeyEnc());
+
+            this.bobpublickeyEnc = bobpublickeyEnc;
+
+             //   System.out.println("bobpublickeyEnc:" + bobpublickeyEnc.toString());
+
+                byte[] bobsecretkey = keyAgree.generateBobSecretKey(alicepublickeyEnc.getPublicKeyEnc());
+
+            // returning Bob's public key over to Alice so that Alice can generate Alice's shared secret
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+    }
+
+    @ApiOperation(value = "get Bob Public Key")
+    @RequestMapping(value = "/getBobPublicKey", method= {RequestMethod.GET}, produces = "text/plain")
+    public byte[] getBobPublicKey() {
+
+        logger.info("bob public key" + bobpublickeyEnc);
+
+        return this.bobpublickeyEnc;
+    }
+
+
 
     @ApiOperation(value = "Add a new restaurant to inventory list")
     @RequestMapping(value = "/addRestaurant", method = RequestMethod.POST, produces = "text/plain")
