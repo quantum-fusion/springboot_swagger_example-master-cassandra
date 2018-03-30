@@ -403,7 +403,7 @@ public class DHKeyAgreement2 {
     /*
      * Converts a byte to hex digit and writes to the supplied buffer
      */
-    private void byte2hex(byte b, StringBuffer buf) {
+    public static void byte2hex(byte b, StringBuffer buf) {
         char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8',
                 '9', 'A', 'B', 'C', 'D', 'E', 'F' };
         int high = ((b & 0xf0) >> 4);
@@ -415,7 +415,7 @@ public class DHKeyAgreement2 {
     /*
      * Converts a byte array to hex string
      */
-    private String toHexString(byte[] block) {
+    public static String toHexString(byte[] block) {
         StringBuffer buf = new StringBuffer();
 
         int len = block.length;

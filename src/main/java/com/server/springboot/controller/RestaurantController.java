@@ -223,7 +223,7 @@ public class RestaurantController {
 
     @ApiOperation(value = "post Alice Public Key")
     @RequestMapping(value = "/postAlicePublicKey", method= {RequestMethod.POST}, produces = "text/plain")
-    public void postAlicePublicKey(@RequestBody String json) {
+    public String postAlicePublicKey(@RequestBody String json) {
 
         PublicKeyEnc mypub = new PublicKeyEnc();
 
@@ -239,7 +239,7 @@ public class RestaurantController {
 
         keyAgree.setup(mode);
 
-        logger.info("greeting diffieHellman" + json);
+        logger.info("greeting diffieHellman json: " + json);
 
         ObjectMapper mapper = new ObjectMapper();
 
@@ -258,6 +258,10 @@ public class RestaurantController {
 
                 byte[] bobsecretkey = keyAgree.generateBobSecretKey(alicepublickeyEnc.getPublicKeyEnc());
 
+            System.out.println("Bob's public key from Alice's post: " + DHKeyAgreement2.toHexString(bobpublickeyEnc));
+
+            return DHKeyAgreement2.toHexString(bobpublickeyEnc);
+
             // returning Bob's public key over to Alice so that Alice can generate Alice's shared secret
 
 
@@ -265,13 +269,15 @@ public class RestaurantController {
                     e.printStackTrace();
                 }
 
+        return "";
+
     }
 
     @ApiOperation(value = "get Bob Public Key")
     @RequestMapping(value = "/getBobPublicKey", method= {RequestMethod.GET}, produces = "text/plain")
     public byte[] getBobPublicKey() {
 
-        logger.info("bob public key" + bobpublickeyEnc);
+        logger.info("bob public key" + DHKeyAgreement2.toHexString(bobpublickeyEnc));
 
         return this.bobpublickeyEnc;
     }
