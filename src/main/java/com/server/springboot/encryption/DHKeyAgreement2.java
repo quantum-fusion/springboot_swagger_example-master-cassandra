@@ -274,7 +274,7 @@ public class DHKeyAgreement2 {
        byte[] bobSharedSecret = bobKeyAgree.generateSecret();
 
         System.out.println("Bob secret: " +
-                toHex(bobSharedSecret));
+                toHexString(bobSharedSecret));
 
 
         return bobSharedSecret;

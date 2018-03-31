@@ -51,6 +51,7 @@ public class RestaurantController {
     private static final Logger logger = LoggerFactory.getLogger(RestaurantController.class);
 
     private byte[] bobpublickeyEnc;
+    private byte[] privateKey;
 
     private void createServerSystemProperties() {
         System.setProperty("keystore","src/test/resources/server-aes-keystore.jck");
@@ -243,24 +244,24 @@ public class RestaurantController {
 
         ObjectMapper mapper = new ObjectMapper();
 
+        PublicKeyEnc alicepublickeyEnc = new PublicKeyEnc();
 
-                PublicKeyEnc alicepublickeyEnc = new PublicKeyEnc();
+        alicepublickeyEnc = mapper.readValue(json, PublicKeyEnc.class);
 
-                alicepublickeyEnc = mapper.readValue(json, PublicKeyEnc.class);
+        //     System.out.println("alicepublickeyEnc:" + alicepublickeyEnc.getPublicKeyEnc().toString());
 
-           //     System.out.println("alicepublickeyEnc:" + alicepublickeyEnc.getPublicKeyEnc().toString());
+        byte[] bobpublickeyEnc = keyAgree.BobKeyGenerate(alicepublickeyEnc.getPublicKeyEnc());
 
-                byte[] bobpublickeyEnc = keyAgree.BobKeyGenerate(alicepublickeyEnc.getPublicKeyEnc());
+        this.bobpublickeyEnc = bobpublickeyEnc;
 
-            this.bobpublickeyEnc = bobpublickeyEnc;
+        //   System.out.println("bobpublickeyEnc:" + bobpublickeyEnc.toString());
+        byte[] bobsecretkey = keyAgree.generateBobSecretKey(alicepublickeyEnc.getPublicKeyEnc());
 
-             //   System.out.println("bobpublickeyEnc:" + bobpublickeyEnc.toString());
+        this.privateKey = bobsecretkey;
 
-                byte[] bobsecretkey = keyAgree.generateBobSecretKey(alicepublickeyEnc.getPublicKeyEnc());
+        System.out.println("Bob's public key from Alice's post: " + DHKeyAgreement2.toHexString(bobpublickeyEnc));
 
-            System.out.println("Bob's public key from Alice's post: " + DHKeyAgreement2.toHexString(bobpublickeyEnc));
-
-            return DHKeyAgreement2.toHexString(bobpublickeyEnc);
+        return DHKeyAgreement2.toHexString(bobpublickeyEnc);
 
             // returning Bob's public key over to Alice so that Alice can generate Alice's shared secret
 
@@ -282,6 +283,14 @@ public class RestaurantController {
         return this.bobpublickeyEnc;
     }
 
+    @ApiOperation(value = "get private Key")
+    @RequestMapping(value = "/getPrivateKey", method= {RequestMethod.GET}, produces = "text/plain")
+    public byte[] getPrivateKey() {
+
+        logger.info("private key: " + DHKeyAgreement2.toHexString(this.privateKey));
+
+        return this.privateKey;
+    }
 
 
     @ApiOperation(value = "Add a new restaurant to inventory list")
