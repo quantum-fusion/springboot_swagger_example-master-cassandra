@@ -229,48 +229,92 @@ public class RestaurantController {
         PublicKeyEnc mypub = new PublicKeyEnc();
 
         try {
-        String mode = "USE_SKIP_DH_PARAMS";
+            String mode = "USE_SKIP_DH_PARAMS";
 
-        // read in Bob's public key certificates
-        createServerSystemProperties();
+            // read in Bob's public key certificates
+            createServerSystemProperties();
 
-        DHKeyAgreement2 keyAgree = new DHKeyAgreement2();
+            DHKeyAgreement2 keyAgree = new DHKeyAgreement2();
 
-        mode = "GENERATE_DH_PARAMS";
+            mode = "GENERATE_DH_PARAMS";
 
-        keyAgree.setup(mode);
+            keyAgree.setup(mode);
 
-        logger.info("greeting diffieHellman json: " + json);
+            logger.info("greeting diffieHellman json: " + json);
 
-        ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = new ObjectMapper();
 
-        PublicKeyEnc alicepublickeyEnc = new PublicKeyEnc();
+            PublicKeyEnc alicepublickeyEnc = new PublicKeyEnc();
 
-        alicepublickeyEnc = mapper.readValue(json, PublicKeyEnc.class);
+            alicepublickeyEnc = mapper.readValue(json, PublicKeyEnc.class);
 
-        //     System.out.println("alicepublickeyEnc:" + alicepublickeyEnc.getPublicKeyEnc().toString());
+            //     System.out.println("alicepublickeyEnc:" + alicepublickeyEnc.getPublicKeyEnc().toString());
 
-        byte[] bobpublickeyEnc = keyAgree.BobKeyGenerate(alicepublickeyEnc.getPublicKeyEnc());
+            byte[] bobpublickeyEnc = keyAgree.BobKeyGenerate(alicepublickeyEnc.getPublicKeyEnc());
 
-        this.bobpublickeyEnc = bobpublickeyEnc;
+            this.bobpublickeyEnc = bobpublickeyEnc;
 
-        //   System.out.println("bobpublickeyEnc:" + bobpublickeyEnc.toString());
-        byte[] bobsecretkey = keyAgree.generateBobSecretKey(alicepublickeyEnc.getPublicKeyEnc());
+            //   System.out.println("bobpublickeyEnc:" + bobpublickeyEnc.toString());
+            byte[] bobsecretkey = keyAgree.generateBobSecretKey(alicepublickeyEnc.getPublicKeyEnc());
 
-        this.privateKey = bobsecretkey;
+            this.privateKey = bobsecretkey;
 
-        System.out.println("Bob's public key from Alice's post: " + DHKeyAgreement2.toHexString(bobpublickeyEnc));
+            System.out.println("Bob's public key from Alice's post: " + DHKeyAgreement2.toHexString(bobpublickeyEnc));
 
-        return DHKeyAgreement2.toHexString(bobpublickeyEnc);
+            return DHKeyAgreement2.toHexString(bobpublickeyEnc);
 
             // returning Bob's public key over to Alice so that Alice can generate Alice's shared secret
 
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return "";
+
+    }
+
+    @ApiOperation(value = "post Bob Public Key")
+    @RequestMapping(value = "/postBobPublicKey", method= {RequestMethod.POST}, produces = "text/plain")
+    public void postBobPublicKey(@RequestBody String json) {
+
+        PublicKeyEnc mypub = new PublicKeyEnc();
+
+        try {
+            String mode = "USE_SKIP_DH_PARAMS";
+
+            // read in Bob's public key certificates
+            createServerSystemProperties();
+
+            DHKeyAgreement2 keyAgree = new DHKeyAgreement2();
+
+            mode = "GENERATE_DH_PARAMS";
+
+            keyAgree.setup(mode);
+
+            logger.info("greeting diffieHellman json: " + json);
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            PublicKeyEnc bobpublickeyEnc = new PublicKeyEnc();
+
+            bobpublickeyEnc = mapper.readValue(json, PublicKeyEnc.class);
+
+            this.bobpublickeyEnc = bobpublickeyEnc.getPublicKeyEnc();
+
+            System.out.println("Bob's public key received from REST POST: " + DHKeyAgreement2.toHexString(bobpublickeyEnc.getPublicKeyEnc()));
+
+
+            byte[] bobsecretkey = keyAgree.generateBobSecretKey(bobpublickeyEnc.getPublicKeyEnc());
+
+            this.privateKey = bobsecretkey;
+
+            System.out.println("Bob's secret key: " + DHKeyAgreement2.toHexString(this.privateKey));
+            System.out.println("Bob's public key from Alice's post: " + DHKeyAgreement2.toHexString(bobpublickeyEnc.getPublicKeyEnc()));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -262,8 +262,20 @@ public class DHKeyAgreement2 {
          * of his version of the DH
          * protocol.
          */
-        System.out.println("BOB: Execute PHASE1 ...");
-        this.bobKeyAgree.doPhase(alicePubKey, true);
+
+        byte[] dummy = {0,0};
+
+        try {
+
+            System.out.println("BOB: Execute PHASE1 ...");
+            this.bobKeyAgree.doPhase(alicePubKey, true);
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("bobKeyAgree.doPhase error: " + e);
+        }
+
 
         /*
          * At this stage, both Alice and Bob have completed the DH key
@@ -271,13 +283,24 @@ public class DHKeyAgreement2 {
          * Both generate the (same) shared secret.
          */
 
-       byte[] bobSharedSecret = bobKeyAgree.generateSecret();
+        try {
 
-        System.out.println("Bob secret: " +
-                toHexString(bobSharedSecret));
+            byte[] bobSharedSecret = bobKeyAgree.generateSecret();
+
+            System.out.println("Bob secret: " +
+                    toHexString(bobSharedSecret));
 
 
-        return bobSharedSecret;
+            return bobSharedSecret;
+        }
+        catch (Exception e)
+        {
+            System.out.println("bobKeyAgree.generateSecret error: " + e);
+
+        }
+
+
+        return dummy;
 
     }
 
