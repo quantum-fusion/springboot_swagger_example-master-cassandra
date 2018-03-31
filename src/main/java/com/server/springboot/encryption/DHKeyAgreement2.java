@@ -162,6 +162,18 @@ public class DHKeyAgreement2 {
 
     }
 
+
+    //ToDo
+    /*
+
+    Generate a AES256 bit key with ECDSA
+     */
+    public void ECDSADH() {
+        // https://stackoverflow.com/questions/21081713/diffie-hellman-key-exchange-in-java
+
+
+    }
+
         public byte[] BobKeyGenerate(byte[] alicePubKeyEnc) throws Exception {
 
 
