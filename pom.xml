@@ -163,6 +163,14 @@
 		</dependency>
 		<!-- End of Encryption library Interfaces -->
 
+		<!-- HMAC library interface -->
+		<dependency>
+			<groupId>com.sun.xml.security</groupId>
+			<artifactId>xml-security-impl</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<!-- End of HMAC library interface -->
+
 
 	<!--	<dependency>
 			<groupId>com.acquitygroup.encryption</groupId>

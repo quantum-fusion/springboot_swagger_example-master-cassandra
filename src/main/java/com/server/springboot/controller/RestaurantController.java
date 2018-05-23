@@ -336,6 +336,14 @@ public class RestaurantController {
         return this.privateKey;
     }
 
+    @ApiOperation(value = "post encrypted String")
+    @RequestMapping(value = "/postEncrypt", method= {RequestMethod.POST}, produces = "text/plain")
+    public void getEncryptedData(@RequestBody String json) {
+
+        logger.info("encrypted data: " + json);
+        
+    }
+
 
     @ApiOperation(value = "Add a new restaurant to inventory list")
     @RequestMapping(value = "/addRestaurant", method = RequestMethod.POST, produces = "text/plain")
