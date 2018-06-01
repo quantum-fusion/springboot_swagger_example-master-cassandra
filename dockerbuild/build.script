@@ -1,7 +1,10 @@
 
+cp ../Dockerfile Dockerfile
 
 cp ../target/spring-boot-web-0.0.1-SNAPSHOT.jar spring-boot-web-0.0.1-SNAPSHOT.jar
 
 docker build -t joethecoder2/spring-boot-web .
 
 rm spring-boot-web-0.0.1-SNAPSHOT.jar
+
+rm Dockerfile 
