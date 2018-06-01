@@ -1,6 +1,6 @@
 [environments]
   [environments.development]
-    name = "spring-boot-web-0.0.1"
+    name = "example-javahello"
     namespace = "default"
     wait = true
     watch = false
