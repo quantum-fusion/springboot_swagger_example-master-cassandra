@@ -1,4 +1,4 @@
 
 docker login --username=joethecoder2
 
-docker push joethecoder2/spring-boot-web
+docker push joethecoder2/spring-boot-web-0.0.1
