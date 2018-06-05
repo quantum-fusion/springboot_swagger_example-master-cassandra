@@ -7,7 +7,7 @@ kubectl delete deployment spring-boot-web
 
 kubectl delete pods spring-boot-web-demo
 
-kubectl create -f ./setupPod.yaml
+kubectl create -f ./pod.yaml
 
 kubectl get service
 
@@ -33,7 +33,7 @@ kubectl logs spring-boot-web-demo
 
 kubectl delete deployment spring-boot-web
 
-kubectl run spring-boot-web --replicas=2 --labels="run=load-balancer-example" --image=joethecoder2/spring-boot-web --port=8080
+kubectl run spring-boot-web --replicas=2 --labels="run=load-balancer-example" --image=joethecoder2/spring-boot-web-0.0.1 --port=8080
 
 kubectl get rs
 

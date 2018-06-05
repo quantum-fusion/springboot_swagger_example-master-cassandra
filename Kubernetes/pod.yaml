@@ -1,16 +1,21 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: microservices
+  name: spring-boot-web-demo
   labels:
-    app: apps
+    purpose: demonstrate-spring-boot-web
 spec:
-  containers:
-    - name: appContainer1 
-      image: gcr.io/mybucket/appContainerImage1 
-      ports:
-        - containerPort: 8080
-    - name: appContainer2
-      image: b.gcr.io/mybucket/appContainerImage2
-      ports:
-        - containerPort: 9090
+    containers:
+    - name: spring-boot-web
+      image: docker.io/joethecoder2/spring-boot-web-0.0.1
+      env:
+      - name: cassandra_ip
+        value: "127.0.0.1"
+      - name: cassandra_port
+        value: "9042"
+      - name: login
+        value: "cassandra"
+      - name: password
+        value: "GN1aJxMnsWOR"
+      command: ["/bin/sh","-c", "java -jar spring-boot-web-0.0.1-SNAPSHOT.jar cassandra_ip=$cassandra_ip cassandra_port=$cassandra_port login=$login password=$password"]
+    restartPolicy: OnFailure
