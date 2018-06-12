@@ -51,7 +51,7 @@ import javax.crypto.interfaces.*;
 
 
 /**
- * Created by hottelet on 10/2/15.
+ * Created by quantum-fusion on 10/2/15.
  */
 public class DHKeyAgreement2 {
 
