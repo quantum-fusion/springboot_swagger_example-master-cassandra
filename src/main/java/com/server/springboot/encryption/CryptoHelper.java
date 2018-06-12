@@ -9,7 +9,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 /**
- * Created by hottelet on 10/8/15.
+ * Created by quantum-fusion on 10/8/15.
  */
 public class CryptoHelper {
 
