@@ -3,9 +3,9 @@
 
 ## Get Started
 
-%git clone https://github.com/quantum-fusion/springboot_swagger_example-master-cassandra
+git clone https://github.com/quantum-fusion/springboot_swagger_example-master-cassandra
 
-%mvn clean install
+mvn clean install
 
 ## Key Benefits of Spring Boot REST Server with OpenAPI standard
 
