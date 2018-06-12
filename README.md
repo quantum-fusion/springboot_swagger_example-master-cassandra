@@ -1,6 +1,12 @@
 
 # REST Spring Boot with Database and OpenAPI Swagger Interfaces:
 
+## Get Started
+
+%git clone https://github.com/quantum-fusion/springboot_swagger_example-master-cassandra
+
+%mvn clean install
+
 ## Key Benefits of Spring Boot REST Server with OpenAPI standard
 
 - OpenAPI standard supported by Swagger2 (https://swagger.io/blog/difference-between-swagger-and-openapi/)
