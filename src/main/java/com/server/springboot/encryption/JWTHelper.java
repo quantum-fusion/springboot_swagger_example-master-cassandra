@@ -1,7 +1,7 @@
 package com.server.springboot.encryption;
 
 /**
- * Created by hottelet on 10/21/15.
+ * Created by quantum-fusion on 10/21/15.
  */
 public class JWTHelper {
 
