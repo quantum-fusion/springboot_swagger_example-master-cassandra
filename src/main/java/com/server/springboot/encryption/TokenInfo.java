@@ -4,7 +4,7 @@ import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 
 /**
- * Created by hottelet on 9/30/15.
+ * Created by quantum-fusion on 9/30/15.
  */
 
 import org.bson.types.ObjectId;
