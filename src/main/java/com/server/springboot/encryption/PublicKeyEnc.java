@@ -3,7 +3,7 @@ package com.server.springboot.encryption;
 import java.io.Serializable;
 
 /**
- * Created by hottelet on 3/29/18.
+ * Created by quantum-fusion on 3/29/18.
  */
 public class PublicKeyEnc implements Serializable {
 
