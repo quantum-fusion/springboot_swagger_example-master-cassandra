@@ -1,7 +1,7 @@
 package com.server.springboot.encryption;
 
 /**
- * Created by hottelet on 9/30/15.
+ * Created by quantum-fusion on 9/30/15.
  */
 
 import java.security.InvalidKeyException;
