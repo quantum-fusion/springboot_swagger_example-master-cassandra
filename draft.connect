@@ -1,0 +1,8 @@
+
+kubectl run metoo --image=joethecoder2/spring-boot-web:1.0.0
+
+kubectl get pods | grep metoo
+
+# kubectl port-forward metoo-5565455fd6-2t9kw 12345:8080
+
+# curl http://localhost:12345/restaurant/helloworld

@@ -1,0 +1,9 @@
+
+cd dockerbuild
+
+./build.script
+
+./upload.script
+
+cd ..
+
