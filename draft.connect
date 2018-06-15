@@ -1,8 +1,14 @@
 
+kubectl delete pod $(kubectl get pods | grep metoo | awk '{print $1}') 
+
+kubectl delete deploy metoo
+kill -9 $(lsof -n -i4TCP:12345 | awk '{print $2}')
+
 kubectl run metoo --image=joethecoder2/spring-boot-web:1.0.0
 
-kubectl get pods | grep metoo
+sleep 15
 
-# kubectl port-forward metoo-5565455fd6-2t9kw 12345:8080
+echo "curl http://localhost:12345/restaurant/helloworld"
 
-# curl http://localhost:12345/restaurant/helloworld
+kubectl port-forward $(kubectl get pods | grep metoo | awk '{print $1}') 12345:8080  
+
