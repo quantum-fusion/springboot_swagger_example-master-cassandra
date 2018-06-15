@@ -9,6 +9,12 @@ cd springboot_swagger_example-master-cassandra
 
 mvn clean install
 
+draft.up
+
+draft.connect
+
+curl http://localhost:12345/restaurant/helloworld
+
 ## Key Benefits of Spring Boot REST Server with OpenAPI standard
 
 - OpenAPI standard supported by Swagger2 (https://swagger.io/blog/difference-between-swagger-and-openapi/)
