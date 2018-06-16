@@ -21,7 +21,6 @@ jobs:
             - ~/.m2
           key: springboot_swagger_example-master-cassandra-{{ checksum "pom.xml" }}
           
-    deploy:
       staging:
       branch: master
       heroku:
