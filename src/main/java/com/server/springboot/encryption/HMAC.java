@@ -16,7 +16,7 @@ import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 /**
  * Encryption class to show how to generate encoded(HMAC-x) signatures.
- *
+ * abcde
  */
 
 public class HMAC {
