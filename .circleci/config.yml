@@ -36,7 +36,24 @@ jobs:
           fi          
                 
       - run: mvn package
-  
+      
+      - run:
+          name: Setup Heroku
+          command: |
+            curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+            chmod +x .circleci/setup-heroku.sh
+            .circleci/setup-heroku.sh
+      - run:
+          name: Deploy to Heroku
+          command: |
+            mkdir app
+            cd app/ 
+            heroku create 
+            # git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git master
+            echo ${HEROKU_API_KEY}
+            echo ${HEROKU_APP}
+            git push https://heroku:bf6edb6e-562c-492a-a5b9-26d9a0daea94@git.heroku.com/salty-woodland-77183.git master
+      
       - run:
           name: Install Docker client
           command: |
@@ -62,23 +79,6 @@ jobs:
           command: |
             docker login -u$DOCKERHUB_LOGIN -p$DOCKERHUB_PASSWORD
             docker push joethecoder2/spring-boot-web:$CIRCLE_SHA1
-      
-      - run:
-          name: Setup Heroku
-          command: |
-            curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-            chmod +x .circleci/setup-heroku.sh
-            .circleci/setup-heroku.sh
-      - run:
-          name: Deploy to Heroku
-          command: |
-            mkdir app
-            cd app/ 
-            heroku create 
-            # git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git master
-            echo ${HEROKU_API_KEY}
-            echo ${HEROKU_APP}
-            git push https://heroku:bf6edb6e-562c-492a-a5b9-26d9a0daea94@git.heroku.com/salty-woodland-77183.git master
       
       - store_test_results:
           path: target/surefire-reports
