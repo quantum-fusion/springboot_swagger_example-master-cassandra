@@ -48,7 +48,7 @@ jobs:
             sudo curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose
             sudo chmod +x  /usr/bin/docker-compose  
             docker --version
-            sudo service docker stop
+            # sudo service docker stop
             sudo nohup docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock &
             sudo docker info            
             docker run hello-world
