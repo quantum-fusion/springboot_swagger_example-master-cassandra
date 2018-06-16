@@ -36,7 +36,7 @@ jobs:
           fi          
                 
       - run: mvn package
-      
+  
       - run:
           name: Install Docker client
           command: |
@@ -44,7 +44,18 @@ jobs:
             VER="17.03.0-ce"
             curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
             tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            # mv /tmp/docker/* /usr/bin
+            mv /tmp/docker/docker* /usr/bin/
+            curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose
+            chmod +x  /usr/bin/docker-compose
+            
+      - run:      
+      - type: setup-docker-engine
+      - type: shell
+        name: Verify Docker Works
+        command: |
+          docker --version
+          docker run hello-world       
+            
       - run:
          name: Build Docker image
          command: docker build -t joethecoder2/spring-boot-web:$CIRCLE_SHA1 .
