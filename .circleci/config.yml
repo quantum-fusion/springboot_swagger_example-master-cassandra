@@ -23,6 +23,17 @@ jobs:
       
       - run: mvn package
       
+      - run:
+          name: Setup Heroku
+          command: |
+            chmod +x .circleci/setup-heroku.sh
+            .circleci/setup-heroku.sh
+      - run:
+          name: Deploy to Heroku
+          command: |
+            cd app/
+            git push heroku master
+      
       - store_test_results:
           path: target/surefire-reports
       
