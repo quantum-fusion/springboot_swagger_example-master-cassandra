@@ -9,9 +9,9 @@ cd springboot_swagger_example-master-cassandra
 
 mvn clean install
 
-draft.up
+./draft.up
 
-draft.connect
+./draft.connect
 
 curl http://localhost:12345/restaurant/helloworld
 
