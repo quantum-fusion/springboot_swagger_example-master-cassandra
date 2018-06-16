@@ -34,6 +34,7 @@ jobs:
           command: |
             mkdir app
             cd app/ 
+            heroku create 
             git push heroku master
       
       - store_test_results:
