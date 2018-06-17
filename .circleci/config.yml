@@ -8,12 +8,11 @@ jobs:
       - image: circleci/openjdk:8-jdk-browsers
       
     steps:
-    
-     - setup_remote_docker:   # (2)
-          docker_layer_caching: true # (3)
-
       - checkout
-
+     
+      - setup_remote_docker:   # (2)
+          docker_layer_caching: true # (3)
+          
       - restore_cache:
           key: springboot_swagger_example-master-cassandra-{{ checksum "pom.xml" }}
       
