@@ -57,33 +57,22 @@ jobs:
             git push https://heroku:bf6edb6e-562c-492a-a5b9-26d9a0daea94@git.heroku.com/salty-woodland-77183.git master
            
       - run:
-          name: Install Docker client
+          name: Test Installation of Docker client
           command: |
-            # set -x
-            # VER="17.03.0-ce"
-            # curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-            # sudo tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            # sudo mv /tmp/docker/docker* /usr/bin/
-            # sudo curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose
-            # sudo chmod +x  /usr/bin/docker-compose  
             docker --version
-            # sudo systemctl start docker
-            # sudo service docker start
-            docker info 
-            # service docker status
-            # sudo service docker stop
-            # nohup docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock &           
+            docker info   
             docker run hello-world
-            
+                  
       - run:
          name: Build Docker image
-         command: docker build -t joethecoder2/spring-boot-web:$CIRCLE_SHA1 .
-
+         command: docker build -t joethecoder2/spring-boot-web:$CIRCLE_BRANCH .
+         
       - run:
           name: Push to DockerHub
           command: |
-            docker login -u$DOCKERHUB_LOGIN -p$DOCKERHUB_PASSWORD
-            docker push joethecoder2/spring-boot-web:$CIRCLE_SHA1
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker login -u$DOCKER_USER -p$DOCKER_PASS
+            docker push joethecoder2/spring-boot-web:$TAG
       
       - store_test_results:
           path: target/surefire-reports
