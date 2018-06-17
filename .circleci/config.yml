@@ -54,6 +54,28 @@ jobs:
             echo ${HEROKU_APP}
             git push https://heroku:bf6edb6e-562c-492a-a5b9-26d9a0daea94@git.heroku.com/salty-woodland-77183.git master
       
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker info
+    - docker build --rm=false -t circleci/elasticsearch .
+
+test:
+  override:
+    - docker run -d -p 9200:9200 circleci/elasticsearch; sleep 10
+    - curl --retry 10 --retry-delay 5 -v http://localhost:9200
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push circleci/elasticsearch
+      
+      
       - run:
           name: Install Docker client
           command: |
