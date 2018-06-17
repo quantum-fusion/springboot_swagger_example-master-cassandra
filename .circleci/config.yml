@@ -51,7 +51,7 @@ jobs:
             TAG=0.1.$CIRCLE_BUILD_NUM
             mkdir app
             cd app/ 
-            heroku create ${CIRCLE_PROJECT_REPONAME}-${TAG}
+            heroku create springboot-${CIRCLE_BUILD_NUM}${TAG}
             echo ${HEROKU_API_KEY}
             echo ${HEROKU_APP}
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git master
