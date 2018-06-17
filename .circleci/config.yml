@@ -65,8 +65,9 @@ jobs:
                   
       - run:
          name: Build Docker image
-         TAG=0.1.$CIRCLE_BUILD_NUM
-         command: docker build -t joethecoder2/spring-boot-web:$TAG .
+         command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker build -t joethecoder2/spring-boot-web:$TAG .
          
       - run:
           name: Push to DockerHub
