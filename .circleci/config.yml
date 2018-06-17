@@ -25,7 +25,7 @@ jobs:
           
       - type: add-ssh-keys
       - type: deploy
-        name: "Deploy to Heroku"
+        name: "Add-SSH-Keys for Deploy to Heroku"
         command: |
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
             # Install Heroku fingerprint (this is heroku's own key, NOT any of your private or public keys)
@@ -54,7 +54,6 @@ jobs:
             echo ${HEROKU_API_KEY}
             echo ${HEROKU_APP}
             git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git master
-            # git push https://heroku:bf6edb6e-562c-492a-a5b9-26d9a0daea94@git.heroku.com/salty-woodland-77183.git master
            
       - run:
           name: Test Installation of Docker client
