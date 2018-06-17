@@ -1,7 +1,14 @@
 version: 2
+
 machine:
   services:
     - docker
+    
+  dependencies:
+  override:
+    - docker info
+    - docker build --rm=false -t joethecoder2/springboot_swagger_example-master-cassandra .
+    
 jobs:
   build:
     
