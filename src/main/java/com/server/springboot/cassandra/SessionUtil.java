@@ -33,6 +33,11 @@ import com.server.springboot.util.CustomException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 // import com.codahale.metrics.*;
 
 
@@ -82,8 +87,47 @@ public class SessionUtil {
 
     public void setupDatabase(String ipaddress, String port) {
 
-        this.controllerProperties.setCassandraIpAddress(ipaddress);
-        this.controllerProperties.setCassandraPort(port);
+        Properties prop = new Properties();
+        InputStream input = null;
+        String databasePort = "";
+        String databaseIpaddress = "";
+
+        try {
+
+            input = new FileInputStream("resources/config/application.properties");
+
+            // load a properties file
+            prop.load(input);
+
+            // get the property value and print it out
+            System.out.println(prop.getProperty("database.port"));
+            System.out.println(prop.getProperty("database.ipaddress"));
+
+            databasePort = prop.getProperty("database.port");
+            databaseIpaddress = prop.getProperty("database.ipaddress");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        if(databasePort.length() == 0 || databaseIpaddress.length() == 0) {
+
+            this.controllerProperties.setCassandraIpAddress(ipaddress);
+            this.controllerProperties.setCassandraPort(port);
+        }
+        else
+        {
+            this.controllerProperties.setCassandraIpAddress(databaseIpaddress);
+            this.controllerProperties.setCassandraPort(databasePort);
+        }
     }
 
     public void setupLogin(String login, String password) {
