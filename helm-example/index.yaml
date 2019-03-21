@@ -2,11 +2,11 @@ apiVersion: v1
 entries:
   java:
   - apiVersion: v1
-    created: 2019-03-21T08:28:04.51797-04:00
+    created: 2019-03-21T08:29:44.914347-04:00
     description: A Helm chart for Kubernetes
-    digest: 4ee651e52846ad3eecc4fe61d2526b0616e90b7d6b46d6845569d44928d740df
+    digest: 4bf770cf622ab6fed32ad52433ffa857a2353f10abb39edae5e70a12aad25ad0
     name: java
     urls:
     - https://github.com/quantum-fusion/springboot_swagger_example-master-cassandra/tree/master/helm-example/java-v0.1.0.tgz
     version: v0.1.0
-generated: 2019-03-21T08:28:04.517189-04:00
+generated: 2019-03-21T08:29:44.913566-04:00
